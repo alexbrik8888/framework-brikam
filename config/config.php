@@ -15,5 +15,11 @@
             'admin'=>[],
             'web' =>[],
         ],
-        'db' =>[]
+        'db' =>[
+            'host' => '127.0.0.1',
+            'port' => '11211',
+            'user' => 'root',
+            'pass' => 'root',
+            'dbname' => 'testwork'
+        ]
     ];

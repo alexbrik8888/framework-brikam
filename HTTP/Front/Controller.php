@@ -7,7 +7,7 @@ class Controller extends BaseController {
    }
 
     public function indexAction() {
-        $smarty = new \Smarty\Smarty();
+
     }
     public function catalogAction() {
 
