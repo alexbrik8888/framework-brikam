@@ -1,5 +1,6 @@
 <?php
 
+require_once  '../vendor/autoload.php';
 require_once  '../AutoLoad.php';
 $startTime = microtime(true);
 $startMemory = memory_get_usage();
