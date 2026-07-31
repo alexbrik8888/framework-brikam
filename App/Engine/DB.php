@@ -11,134 +11,123 @@ class DbExceptionSQL {
 
 class DB {
 
-    private $connection;
+    private static ?\PDO $pdo = null;
     private $config = null;
     private $dbObj;
-    protected  $select = [];
-    protected  $from = [];
+    protected array $select = [];
+    protected array $from = [];
+    protected array $join = [];
+    protected array $where = [];
+    protected  array $group = [];
+    protected  array $having = [];
+    protected  array $order = [];
+    protected  int|string|null $limit = null;
+    protected  int|string|null $offset = null;
 
-    protected  $join = [];
-
-    protected  $where = [];
-    protected  $group = [];
-    protected  $having = [];
-    protected  $order = [];
-    protected  $limit = null;
-    protected  $offset = null;
+    protected array $bindings = [];
 
     protected $strQusery = '';
 
     public function __construct() {
             $this->config = Cache::getInstance()->get('db');
-            $this->connection = new \mysqli($this->config['host'], $this->config['user'], $this->config['pass'], $this->config['dbname'],'utf8');
-            if($this->connection->connect_errno)
-                throw  new \Exception($this->connection->connect_errno);
+            $dsn = sprintf("mysql:host=%s;dbname=%s;charset=%s",
+                $this->config['host'],
+                $this->config['dbname'],
+                $this->config['charset'] ?? 'utf8mb4'
+            );
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        self::$pdo = new PDO($dsn, $this->config['user'], $this->config['pass'], $options);
      }
-
     public function __destruct() {
-        $this->connection->close();
+        self::$pdo = null;
     }
 
 
     private function  bilderSelct() {
-
-        $select = (empty($this->select))
-        $this->strQusery = sprintf("SELECT  %s  ",)
+        $select = (!empty($this->select))?$this->select:['*'];
+        $where  = (!empty($this->where))?implode('  ',$this->where):['1=1'];
+        $group  = (!empty($this->group))? (' GROUP BY ' .implode(' , ',$this->group)):'';
+        $having  = (!empty($this->group))? (' HAVING ' .implode('  ',$this->group)):'';
+        $order  = (!empty($this->order))? (' ORDER BY ' .implode(' ',$this->order)):'';
+        $limit  = (!empty($this->limit))? (' LIMIT ' .$this->limit):'';
+        $offset = (!empty($this->offset))? (' OFFSET ' .$this->offset):'';
+        $this->strQusery = sprintf("SELECT  %s  FROM  %s  %s  WHERE  %s %s  %s %s %s %s ",
+            mplode(' , ',$select),
+            implode(' , ',$this->from),
+            implode('  ',$this->join),
+            $where, $group, $having, $order, $limit, $offset
+        );
     }
 
     public static function raw($sql) {return new DbExceptionSQL($sql);}
 
-    public function select($select){
+    public function select(string|array $select): self{
         if(is_string($select))
             $this->select[] = $select;
         if(is_array($select))
-            $this->select[] = $select;
+            $this->select  =  array_merge($this->select,$select);
         return $this;
     }
 
-    public function from($from){
+    public function from( string|array $from){
         if(is_string($from))
             $this->select[] = $from;
         if(is_array($from))
-            $this->select[] = $from;
+            $this->select[] =array_merge($this->from,$from);
         return $this;
     }
+
+
+    protected function join(string $table, string|array $on = '', string $type = 'INNER') {
+        if(!empty($table))
+            throw new \Exception('table empty');
+        if(!empty($on)) {
+            if(is_array($on)){
+                if(key_exists($on[0], ['field','type','operator','value'])){
+                    $where ='';
+                    for ($i = 0; $i < count($on); $i++) {
+                        $where =  printf(" %s %s %s '%s' ",
+                           (count($on) > 1 && $i >1) ? $on[$i]['type'] : '',$on[$i]['field'], $on[$i]['value'], $on[$i]['operator']);
+                   }
+                } else {
+                    throw new \Exception("Формат масива не верен [['field'=>'','type'=>'','operator'=>'','value'=>''],...]");
+                }
+
+            }
+            $this->join[] = sprintf('%s JOIN  %s ON %s ',$type, $table, $on);
+            return $this;
+        }
+        if(is_string($table)){
+            $this->join[] = sprintf('%s JOIN  %s ',$type, $table);
+            return $this;
+        }
+        if($table instanceof DbExceptionSQL) {
+            $this->join[] = $type.' JOIN '. $table->sql;
+            return $this;
+        }
+        return $this;
+    }
+
 
     public function joinLeft($table,$where = ''){
-           if(!empty($table))
-               throw new \Exception('table empty');
-           if(is_string($table) &&  (is_string($where) || is_array($table)) && !empty($where)) {
-               $this->join[] = sprintf('LEFT JOIN  %s ON %s ', $table, $where);
-                return $this;
-           }
-           if(is_string($table)){
-               $this->join[] = sprintf('LEFT JOIN  %s ', $table);
-               return $this;
-           }
-           if($table instanceof DbExceptionSQL) {
-               $this->join[] = 'LEFT JOIN '. $table->sql;
-               return $this;
-           }
-           return $this;
+           return $this->join($table,$where,'LEFT');
     }
     public function joinRight($table,$where = ''){
-        if(!empty($table))
-            throw new \Exception('table empty');
-        if(is_string($table) &&  (is_string($where) || is_array($table)) && !empty($where)) {
-            $this->join[] = sprintf('LEFT RIGHT  %s ON %s ', $table, $where);
-            return $this;
-        }
-        if(is_string($table)){
-            $this->join[] = sprintf('LEFT RIGHT  %s ', $table);
-            return $this;
-        }
-        if($table instanceof DbExceptionSQL) {
-            $this->join[] = 'LEFT RIGHT '.$table->sql;
-            return $this;
-        }
-        return $this;
+       return $this->join($table,$where,'RIGHT');
     }
     public function joinCross($table,$where = ''){
-        if(!empty($table))
-            throw new \Exception('table empty');
-        if(is_string($table) &&  (is_string($where) || is_array($table)) && !empty($where)) {
-            $this->join[] = sprintf('CROSS JOIN %s ON %s ', $table, $where);
-            return $this;
-        }
-        if(is_string($table)){
-            $this->join[] = sprintf('CROSS JOIN %s ', $table);
-            return $this;
-        }
-        if($table instanceof DbExceptionSQL) {
-            $this->join[] = 'CROSS JOIN '.$table->sql;
-            return $this;
-        }
-        return $this;
+        return $this->join($table,$where,'CROSS');
     }
     public function joinInner($table,$where = ''){
-        if(!empty($table))
-            throw new \Exception('table empty');
-        if(is_string($table) &&  (is_string($where) || is_array($table)) && !empty($where)) {
-            $this->join[] = sprintf('INNER JOIN  %s ON %s ', $table, $where);
-            return $this;
-        }
-        if(is_string($table)){
-            $this->join[] = sprintf('INNER JOIN JOIN  %s ', $table);
-            return $this;
-        }
-        if($table instanceof DbExceptionSQL) {
-            $this->join[] = $table->sql;
-            return $this;
-        }
-        return $this;
+        return $this->join($table,$where,'INNER');
     }
 
-
-
-    public function where($field,$value,$operator = '=',$type = 'and'){
-        if(is_string($field) && is_string($operator) && is_string($type)) {
+    public function where( string $field, mixed $value, string $operator = '=', string $type = 'and'){
             $this->where[] = sprintf(" %s %s %s '%s' ",(count($this->where) > 1) ? $type : '', $field, $operator, $value );
-        }
     }
     public function whereMultiple($whereArr){
         if(is_array($whereArr) && array_diff_key($whereArr[0],['field'=>1,'value'=>1,'operator'=>1,'type']) ==  0) {
