@@ -2,7 +2,6 @@
 namespace app\Engine\extension;
 
 trait  AuthFunction {
-
     public function check(){
         if(isset( $_SESSION['id']) && !empty( $_SESSION['id'] ))
             return true;
@@ -13,9 +12,10 @@ trait  AuthFunction {
     }
     public function checkCreadantion(array $credantion,$remember = false) {
         foreach ($credantion as $key => $value) {
-            $this->where($key ,$value);
+            $this->model->where($key ,$value);
         }
-        if($user =  $this->getFirst()) {
+        $user =  $this->model->getFirst();
+        if($user) {
             $this->saveSession($user);
             if($remember) {
                 $lifetime = 30 * 24 * 60 * 60;

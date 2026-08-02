@@ -8,4 +8,5 @@ Route::getInstance()->addRoute('/article',\HTTP\Front\Controller::class,'details
 Route::getInstance()->addRoute('/admin',\HTTP\Admin\Controller::class,'indexAction');
 Route::getInstance()->addRoute('/admin/category',\HTTP\Admin\Controller::class,'categoryAction');
 Route::getInstance()->addRoute('/admin/article',\HTTP\Admin\Controller::class,'articleAction');
+Route::getInstance()->addRoute('/admin/list/article',\HTTP\Admin\Controller::class,'articleListAction');
 Route::getInstance()->addRoute('/admin/login',\HTTP\Admin\Controller::class,'loginAction');

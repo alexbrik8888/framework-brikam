@@ -1,0 +1,153 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+body { display: flex; min-height: 100vh; background: #f4f6f9; color: #333; }
+
+/* Боковое меню */
+aside { width: 250px; background: #1e293b; color: #fff; padding: 20px 0; flex-shrink: 0; }
+aside h2 { padding: 0 20px 20px; font-size: 18px; border-bottom: 1px solid #334155; }
+aside nav a { display: block; color: #cbd5e1; padding: 12px 20px; text-decoration: none; }
+aside nav a:hover, aside nav a.active { background: #334155; color: #fff; }
+
+/* Контентная область */
+main { flex: 1; padding: 30px; }
+.card { background: #fff; border-radius: 8px; padding: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+h1 { font-size: 24px; margin-bottom: 20px; }
+
+/* Формы */
+.form-group { margin-bottom: 18px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+input[type="text"], input[type="date"], select, textarea {
+    width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;
+}
+textarea { resize: vertical; min-height: 100px; }
+select[multiple] { height: 120px; }
+.btn { background: #2563eb; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.btn:hover { background: #1d4ed8; }
+.alert-success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Таблица (Grid) */
+.grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+.grid-table th, .grid-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+.grid-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 14px;
+}
+.grid-table tr:hover {
+    background: #f1f5f9;
+}
+.badge-parent {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #334155;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+.badge-root {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+}
+.pagination a, .pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: #334155;
+    text-decoration: none;
+    font-size: 14px;
+}
+.pagination a:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+.pagination .active {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+}
+.pagination .disabled {
+    color: #94a3b8;
+    pointer-events: none;
+    border-color: #e2e8f0;
+}
+
+[dropzone] {
+    width: 400px;
+    position: relative;
+    border: 10px dotted #0a0e14;
+    border-radius: 20px;
+    color: white;
+    font: bold 24px/200px arial;
+    height: 200px;
+    text-align: center;
+}
+
+[dropzone] .hover {
+    border: 10px solid #FE5;
+    color: #FE5;
+}
+
+[dropzone] .dropped {
+    background: #222;
+    border: 10px solid #444;
+}
+
+[dropzone]  [bodypreview] {
+    color: black;
+    display: flex;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+[dropzone] [show] {
+    border-radius: 10px;
+    margin: 2px;
+    border: 1px solid black;
+    width: 150px;
+    height: 150px;
+}
+[dropzone] [type="file"] {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}

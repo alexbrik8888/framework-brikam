@@ -37,7 +37,7 @@ class Request
                 $this->body = json_decode($rawInput, true);
 
                 if (json_last_error() === JSON_ERROR_NONE && is_array($this->body)) {
-                    $params = array_merge($this->params, $this->body);
+                     $this->params = array_merge($this->params, $this->body);
                 } else {
                     parse_str($rawInput, $parsedInput);
                     if (is_array($parsedInput)) {

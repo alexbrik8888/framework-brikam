@@ -17,8 +17,12 @@ class View {
         $this->viewEngine->addTemplateDir($this->config['pages'], 'pages');
     }
 
-    public function render($template, $data = array()) {
+    public function render($template, $data = []) {
         $result = null;
+        foreach ($data as $key => $value) {
+            if(!empty( $value))
+                $this->viewEngine->assign($key, $value);
+        }
         ob_start();
         $this->viewEngine->display($this->config['pages'].$template);
         $result = ob_get_clean();

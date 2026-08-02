@@ -26,11 +26,19 @@ class DB {
     protected  int|string|null $limit = null;
     protected  int|string|null $offset = null;
 
+
     protected array $bindings = [];
 
     protected $strQusery = '';
 
-    public function __construct() {
+    protected static $inst = null;
+    public static function getInstance(): self {
+            if(self::$inst == null){
+                self::$inst = new self();
+            }
+            return self::$inst;
+    }
+    public function __construct(string $table = null) {
             $this->config = Config::getInstance()->getConfig('db');
             $dsn = sprintf("mysql:host=%s;dbname=%s;charset=%s",
                 $this->config['host'],
@@ -43,12 +51,12 @@ class DB {
             \PDO::ATTR_EMULATE_PREPARES   => false,
         ];
         self::$pdo = new \PDO($dsn, $this->config['user'], $this->config['pass'], $options);
+        if(!is_null($table))
+            $this->from($table);
      }
     public function __destruct() {
-        self::$pdo = null;
+        //self::$pdo = null;
     }
-
-
     private function  bilderSelct() {
         $select = (!empty($this->select))?$this->select:['*'];
         $where  = (!empty($this->where))?implode('  ',$this->where):['1=1'];
@@ -242,12 +250,16 @@ class DB {
         $temp = $this->select;
         $tempLimit = $this->limit;
         $this->limit = null;
+        $tempOffset = $this->offset;
+        $this->offset = null;
         $this->select = ['COUNT(id) as \'count\''];
         $stmt = $this->execute();
+
         $result = $stmt->fetchColumn(0);
         $this->limit = $tempLimit;
         $this->select = $temp;
         $stmt = null;
+        $this->offset = $tempOffset;
         return (($result)??0);
     }
 
@@ -321,15 +333,19 @@ class DB {
         return  $result;
     }
 
-    public function beginTransaction(){
-       self::$pdo->beginTransaction();
+    public  function beginTransaction(){
+        if(!self::$pdo->inTransaction())
+            return  self::$pdo->beginTransaction();
     }
     public function commit(){
-        self::$pdo->commit();
+        if(self::$pdo->inTransaction())
+       return  self::$pdo->commit();
     }
 
     public function rollback(){
-        self::$pdo->rollBack();
+        if(self::$pdo->inTransaction())
+
+            return  self::$pdo->rollBack();
     }
 
     public function update(string $table,array $data): int|bool {

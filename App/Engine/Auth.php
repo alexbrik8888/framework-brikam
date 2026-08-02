@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Engine;
-class Auth {
+use app\Engine\extension\AuthFunction;
+
+class Auth  {
+    use AuthFunction;
+
+
     private $id;
     private $group;
     private $gait;
@@ -18,9 +23,9 @@ class Auth {
     }
 
     public function setModel($model) {
-        if(in_array('App\\Engine\\Model' ,class_parents($model)));
+        if(in_array('App\\Engine\\Model' ,class_parents($model)))
         $this->model = (new $model());
-        d($this->model);
+        return $this;
     }
     public function attachment(array $credentials) {
 

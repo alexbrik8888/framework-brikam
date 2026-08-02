@@ -38,8 +38,10 @@ class App
             echo (new  ('\\' . $nameControler)())->callAction($action, $this->request->getAllParams());
             $executionTime = (microtime(true) - $startTime) * 1000; // в ms
             $memoryUsed = (memory_get_usage() - $startMemory) / 1024; // в KB
-            echo "Время выполнения: {$executionTime} ms\n";
-            echo "Использовано памяти: {$memoryUsed} KB\n";
+
+
+            $time = "Время выполнения: {$executionTime} ms\n".  "Использовано памяти: {$memoryUsed} KB\n";
+            echo "<div style='position: fixed;left: 0px; top:0px'>{$time}</div>";
         } else {
             echo file_get_contents(dirname(__DIR__,2).$this->request->getPath());
         }
