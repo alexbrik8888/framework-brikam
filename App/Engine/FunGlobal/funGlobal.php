@@ -24,3 +24,15 @@ function d(){
     echo "<pre>";
     die();
 }
+
+function removeKeysRecursive(array &$array, array $keysToRemove): void {
+    foreach ($array as $key => &$value) {
+        if (in_array($key, $keysToRemove, true)) {
+            unset($array[$key]);
+            continue;
+        }
+        if (is_array($value)) {
+            removeKeysRecursive($value, $keysToRemove);
+        }
+    }
+}

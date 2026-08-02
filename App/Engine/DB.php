@@ -231,11 +231,21 @@ class DB {
          $stmt = null;
          return $result;
     }
+    public function getOne() : array|bool {
+        $this->limit(1);
+        $stmt =  $this->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $result;
+    }
     public function count() : int{
         $temp = $this->select;
+        $tempLimit = $this->limit;
+        $this->limit = null;
         $this->select = ['COUNT(id) as \'count\''];
         $stmt = $this->execute();
         $result = $stmt->fetchColumn(0);
+        $this->limit = $tempLimit;
         $this->select = $temp;
         $stmt = null;
         return (($result)??0);
@@ -244,7 +254,6 @@ class DB {
 
     protected function execute(): PDOStatement {
        $this->getQueryString();
-       dd($this->strQusery);
        $stmt  = self::$pdo->prepare($this->strQusery);
        $stmt->execute($this->bindings);
        return $stmt;
@@ -323,12 +332,19 @@ class DB {
         self::$pdo->rollBack();
     }
 
-    public function update(string $table,array $data): bool {
-        $this ->strQusery = "UPDATE {$table} SET  ";
+    public function update(string $table,array $data): int|bool {
+        $params =  $set = [];
+        foreach ($data as $key => $value)
+            $set[] = "{$key} = '".addslashes($value)."'";
+
+        $set = implode(' , ',$set);
+        $this ->strQusery = "UPDATE {$table} SET {$set} ";
         if(!empty($this->where))
             $this ->strQusery .= "WHERE ".implode(' ', $this->where);
         $stmt = self::$pdo->prepare($this ->strQusery);
         $result =  $stmt->execute($this->bindings);
+        if($result)
+            $result= $stmt->rowCount();
         $stmt = null;
         return  $result;
 
@@ -344,6 +360,8 @@ class DB {
         return  $result;
     }
 
+    public function getLimit() { return $this->limit; }
+    public function getOffset(){return $this->offset; }
     public function clear():self{
             $this->select = [];
             $this->from = [];
