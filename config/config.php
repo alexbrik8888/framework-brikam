@@ -10,10 +10,11 @@
 
         'smarty' =>[
             'templateDir' => dirname(__DIR__,1).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'smarty'.DIRECTORY_SEPARATOR.'templates',
-            'compiledDir' => dirname(__DIR__,1).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'smarty'.DIRECTORY_SEPARATOR.'compiled',
+            'compiledDir' => dirname(__DIR__,1).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'smarty'.DIRECTORY_SEPARATOR.'',
             'configDir' => dirname(__DIR__,1).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'smarty'.DIRECTORY_SEPARATOR.'config',
             'cacheDir' => dirname(__DIR__,1).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'smarty'.DIRECTORY_SEPARATOR.'cache',
-        ],
+            'pages' => dirname(__DIR__,1).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'smarty'.DIRECTORY_SEPARATOR.'pages',
+           ],
 
         'session' =>[
             'lifetime' => 600,
@@ -24,7 +25,6 @@
             'samesite' => 'Lax'     // Защита от CSRF
         ],
         'boot_include' => [
-                'App/Engine/FunGlobal/session.php',
                 '/route.php',
         ],
         'db' =>[
