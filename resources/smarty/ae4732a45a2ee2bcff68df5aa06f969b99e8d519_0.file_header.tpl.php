@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-03 16:54:38
+/* Smarty version 5.8.4, created on 2026-08-03 17:13:50
   from 'file:Front/layout/header.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a709d9ea24967_60643605',
+  'unifunc' => 'content_6a70a21e04b775_00293782',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ae4732a45a2ee2bcff68df5aa06f969b99e8d519' => 
     array (
       0 => 'Front/layout/header.tpl',
-      1 => 1785657437,
+      1 => 1785766426,
       2 => 'file',
     ),
   ),
@@ -20,15 +20,23 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a709d9ea24967_60643605 (\Smarty\Template $_smarty_tpl) {
+function content_6a70a21e04b775_00293782 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
 ?><header class="main-header">
     <div class="logo">PORTAL<span>NEWS</span></div>
     <nav class="nav-categories">
-        <a href="#">Политика</a>
-        <a href="#">Технологии</a>
-        <a href="#">Бизнес</a>
-        <a href="#">Спорт</a>
+        <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('main_category'), 'item');
+$foreach0DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('item')->value) {
+$foreach0DoElse = false;
+?>
+        <a href="/catalog?id=<?php echo $_smarty_tpl->getValue('item')['id'];?>
+"><?php echo $_smarty_tpl->getValue('item')['name'];?>
+</a>
+        <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </nav>
 </header><?php }
 }

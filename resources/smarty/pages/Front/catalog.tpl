@@ -3,9 +3,11 @@
 <main class="container">
     <!-- Шапка категории -->
     <header class="category-page-header">
-        <h1 class="cat-title">ТЕХНОЛОГИИ</h1>
-        <p class="cat-description">Актуальные новости из мира высоких технологий, стартапов и IT-индустрии.</p>
+        <h1 class="cat-title">{$category.name}</h1>
+        <p class="cat-description">{$category.description}</p>
     </header>
+
+
 
     <!-- Панель сортировки -->
     <div class="toolbar">
@@ -34,12 +36,22 @@
     </section>
 
     <!-- Пагинация (CNN Style) -->
+    {if $pagination.total > 1}
     <nav class="pagination">
-        <a href="#" class="page-link disabled">&laquo; Назад</a>
-        <a href="#" class="page-link active">1</a>
-        <a href="#" class="page-link">2</a>
-        <a href="#" class="page-link">3</a>
-        <a href="#" class="page-link">Вперед &raquo;</a>
+        {if $pagination.page > 1}
+            <a  href="?page={$pagination.page - 1}" class="page-link disabled">&laquo; Назад</a>
+        {/if}
+        {section name=p start=1 loop=$pagination.countPage+1}
+            {if $smarty.section.p.index == $pagination.page}
+                <a href="?page={$smarty.section.p.index}" class="page-link active">{$smarty.section.p.index}</a>
+            {else}
+                <a class="page-link" href="?page={$smarty.section.p.index}">{$smarty.section.p.index}</a>
+            {/if}
+        {/section}
+        {if $pagination.page < $pagination.countPage}
+            <a href="?page={$pagination.page+ 1}" class="page-link">Вперед &raquo;</a>
+        {/if}
     </nav>
+    {/if}
 </main>
 {/block}

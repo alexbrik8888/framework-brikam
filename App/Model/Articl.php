@@ -30,7 +30,6 @@ protected array $fields =[
         "name", c.name        
         )) as "category" , category_articl.articl_id,category_articl.category_id  FROM   category_articl  
         LEFT JOIN category AS c ON category_articl.category_id = c.id 
-           
            GROUP BY category_articl.articl_id  ) as aricle_category ON   aricle_category.articl_id = '.$this->table.'.id ';
         $this->Query()->joinLeft((new DbExceptionSQL($join)));
         $this->Query()->select('aricle_category.category');
@@ -55,6 +54,53 @@ protected array $fields =[
         if(isset($rez['category']))
             $rez['category'] = json_decode($rez['category'],true);
         return $rez;
+    }
+
+
+    public function getLastTheeArticlCategoy() {
+       $rez =  $this->newQuery()->Query()->statment('WITH RankedArticles AS (
+                SELECT 
+                    c.id AS category_id,
+                    c.name AS category_name,
+                    a.id AS article_id,
+                    a.description AS article_description,
+                    a.name AS article_title,
+                    f.id AS file_id,
+                    a.created_at,
+      
+                    -- Нумеруем статьи отдельно для каждой категории по дате (от новых к старым)
+                    ROW_NUMBER() OVER (
+                        PARTITION BY c.id 
+                        ORDER BY a.created_at DESC, a.id DESC
+                    ) AS rn
+                FROM category c
+                JOIN category_articl ac ON c.id = ac.category_id
+                JOIN articl a ON ac.articl_id = a.id
+                JOIN file f ON ac.articl_id = f.abstract_id AND f.type_id = 1
+            )
+            SELECT 
+                category_id,
+                category_name,
+                article_id,
+                article_title,
+                article_description,
+                created_at,
+                file_id
+            FROM RankedArticles
+            WHERE rn <= 3 
+            ORDER BY category_id, created_at DESC');
+       $group = [];
+        $groupName = [];
+       foreach ($rez as $item){
+           if(key_exists($item['category_id'],$group)){
+               $group[$item['category_id']][] = $item;
+           } else {
+               $group[$item['category_id']] = [$item];
+           }
+           $groupName[$item['category_id']] = $item['category_name'];
+       }
+        asort($groupName);
+        return ['group' => $group,'group_name'=> $groupName];
     }
 }
 

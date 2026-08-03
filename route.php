@@ -6,8 +6,6 @@ Route::getInstance()->addRoute('/article',\HTTP\Front\Controller::class,'details
 
 Route::getInstance()->addRoute('/file/image',\HTTP\Front\Controller::class,'getImageAction');
 
-
-
 Route::getInstance()->addRoute('/admin',\HTTP\Admin\Controller::class,'indexAction');
 Route::getInstance()->addRoute('/admin/category',\HTTP\Admin\Controller::class,'categoryAction');
 Route::getInstance()->addRoute('/admin/article',\HTTP\Admin\Controller::class,'articleAction');

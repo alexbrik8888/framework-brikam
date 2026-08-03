@@ -158,6 +158,16 @@ class DB {
         return $this;
     }
 
+    public function whereISNULL(string $field,string $type = 'and') :self {
+        $this->where[] =  sprintf(" %s  %s  IS NULL ", (count($this->where) > 1) ? $type : '',$field);
+        return $this;
+    }
+    public function whereISNOTNULL(string $field,string $type = 'and') :self {
+        $this->where[] =  sprintf(" %s  %s  IS NOT NULL ", (count($this->where) > 1) ? $type : '',$field);
+        return $this;
+    }
+
+
     public function whereIN(string $field, array $value,string $type = 'and') :self {
          $inParama = [];
          foreach ($value as $item){
@@ -252,7 +262,7 @@ class DB {
         $this->limit = null;
         $tempOffset = $this->offset;
         $this->offset = null;
-        $this->select = ['COUNT(id) as \'count\''];
+        $this->select = ['COUNT(*) as \'count\''];
         $stmt = $this->execute();
 
         $result = $stmt->fetchColumn(0);
@@ -377,7 +387,11 @@ class DB {
         $stmt = null;
         return  $result;
     }
-
+    public function statment(string $sql, array $params = []) {
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->execute( $params);
+        return  $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
     public function getLimit() { return $this->limit; }
     public function getOffset(){return $this->offset; }
     public function clear():self{
