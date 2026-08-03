@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-02 17:31:36
+/* Smarty version 5.8.4, created on 2026-08-03 16:54:04
   from 'file:C:\OpenServer\domains\testwork\resources\smarty\pages/Admin/list_article.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a6f54c8a7ba94_17191577',
+  'unifunc' => 'content_6a709d7c9233b2_59733589',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '13fc0c87103e91620e9b58f12204064feef28d9f' => 
     array (
       0 => 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages/Admin/list_article.tpl',
-      1 => 1785681089,
+      1 => 1785765242,
       2 => 'file',
     ),
   ),
@@ -20,27 +20,27 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a6f54c8a7ba94_17191577 (\Smarty\Template $_smarty_tpl) {
+function content_6a709d7c9233b2_59733589 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_16055859196a6f54c8a34e38_87676969', "title");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_19565207696a709d7c8d9571_97340737', "title");
 ?>
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_5361978986a6f54c8a3dca5_27985884', "script_top");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_9811113456a709d7c8e20e6_22902464', "script_top");
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_12511842476a6f54c8a3f970_78978755', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_3128708456a709d7c8e3930_62469562', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "Admin/layout/layout.tpl", $_smarty_current_dir);
 }
 /* {block "title"} */
-class Block_16055859196a6f54c8a34e38_87676969 extends \Smarty\Runtime\Block
+class Block_19565207696a709d7c8d9571_97340737 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
@@ -50,7 +50,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "title"} */
 /* {block "script_top"} */
-class Block_5361978986a6f54c8a3dca5_27985884 extends \Smarty\Runtime\Block
+class Block_9811113456a709d7c8e20e6_22902464 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
@@ -60,10 +60,9 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
     <?php echo '<script'; ?>
 >
         function deleteArticle(id){
-
-        }
-        function editArticle(data) {
-
+            fetch('/admin/list/article', {method: 'DELETE',headers:{'Content-Type': 'application/json'}
+                , body:JSON.stringify({id:id})});
+            location.href=window.location.search;
         }
     <?php echo '</script'; ?>
 >
@@ -74,12 +73,13 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "script_top"} */
 /* {block "content"} */
-class Block_12511842476a6f54c8a3f970_78978755 extends \Smarty\Runtime\Block
+class Block_3128708456a709d7c8e3930_62469562 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
 ?>
 
+    <button type="button" onclick="location.href='/admin/article'" class="btn">Добавить статью</button>
     <div>
         <form action="/admin/category" method="GET">
             <div style="display: flex;gap: 20px;align-items: center;justify-content: center;">
@@ -114,7 +114,6 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
                     <button type="submit" class="btn">Искать</button>
                 </div>
             </div>
-
         </form>
     </div>
     <table class="grid-table">
@@ -141,8 +140,17 @@ $foreach1DoElse = false;
                 <td><?php echo $_smarty_tpl->getValue('article')['name'];?>
 </td>
                 <td>
-                    <?php echo $_smarty_tpl->getValue('article')['category'];?>
-
+                    <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('article')['category'], 'item');
+$foreach2DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('item')->value) {
+$foreach2DoElse = false;
+?>
+                        <span><?php echo $_smarty_tpl->getValue('item')['name'];?>
+</span> ,
+                    <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
                 </td>
                 <td>
                     <?php echo $_smarty_tpl->getValue('article')['description'];?>

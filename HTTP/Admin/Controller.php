@@ -17,9 +17,9 @@ class Controller extends BaseController {
             if($action == 'loginAction'){
                 return parent::callAction($action, $params);
             } else {
-                if(Auth::getInstance()->setModel(UserAmin::class)->check())
+                if(Auth::getInstance()->setModel(UserAmin::class)->check()) {
                     return parent::callAction($action, $params);
-                else
+                }else
                     return parent::callAction('loginAction', $params);
             }
    }
@@ -60,6 +60,7 @@ class Controller extends BaseController {
     public function articleListAction() {
         $article = new Articl();
         $article->setLimit(10);
+        $article->Query()->select('*');
         $param =  Request::getInstance()->getAllParams();
         if(Request::getInstance()->getMethod() == 'GET'){
             if(isset($param['name']) && !empty($param['name']))
@@ -74,8 +75,9 @@ class Controller extends BaseController {
         if(Request::getInstance()->getMethod() == 'DELETE'){
             $article->where('id',Request::getInstance()->getParam('id'))->delete();
         }
+        $articleData = $article->connectCategory()->getList();
         return  (new  View())->render('/Admin/list_article.tpl',[
-            'article_list' =>$article->getList() ,
+            'article_list' =>$articleData,
             'pagination' =>$article->getPagination(),
             'category' =>  (new Category())->setLimit('')->getList(),
         ]);
@@ -87,9 +89,7 @@ class Controller extends BaseController {
         $param =  Request::getInstance()->getAllParams();
         if(Request::getInstance()->getMethod() == 'POST') {
             try {
-
                 $dataArticle = $article->save($param);
-
                 if ($dataArticle) {
                     $dataArticle['abstract_id'] = $dataArticle['id'];
                     $dataArticle['type_id'] = 1;
@@ -119,8 +119,17 @@ class Controller extends BaseController {
         }
         if(Request::getInstance()->getMethod() == 'GET')
             $article->find('id',Request::getInstance()->getParam('id'));
+        $articleData = $article->connectImage()->connectCategory()->getFirst();
+        $categoryTemp = [];
+        if(!empty($articleData['category'])) {
+            foreach ($articleData['category'] as $cId) {
+                $categoryTemp[] = $cId['category_id'];
+            }
+        }
+        $articleData['category'] = $categoryTemp;
+        $article->Query()->select('*');
         return  (new  View())->render('/Admin/article.tpl',[
-            'article' =>  $article->getFirst() ,
+            'article' =>  $articleData ,
             'category' =>  (new Category())->setLimit('')->getList(),
             'error' => $error
         ]);
@@ -132,7 +141,7 @@ class Controller extends BaseController {
            $params = Request::getInstance()->getAllParams();
            if(isset($params['email']) && isset($params['password'])) {
               $result = Auth::getInstance()->setModel(UserAmin::class)->checkCreadantion(['email'=> $params['email'],'password'=> md5($params['password'])]);
-               if($result){
+              if($result){
                    header('Location: /admin');
                    exit();
               } else {
@@ -145,5 +154,9 @@ class Controller extends BaseController {
 
         return  (new  View())->render('/Admin/login.tpl',['error_message'=>$error]);
     }
-
+    public function logoutAction() {
+       unset($_SESSION['id'],$_SESSION['user_info']);
+        header('Location: /admin');
+        exit();
+    }
 }

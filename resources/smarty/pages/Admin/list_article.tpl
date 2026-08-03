@@ -6,10 +6,9 @@
 {literal}
     <script>
         function deleteArticle(id){
-
-        }
-        function editArticle(data) {
-
+            fetch('/admin/list/article', {method: 'DELETE',headers:{'Content-Type': 'application/json'}
+                , body:JSON.stringify({id:id})});
+            location.href=window.location.search;
         }
     </script>
 {/literal}
@@ -17,6 +16,7 @@
 {/block}
 
 {block name="content"}
+    <button type="button" onclick="location.href='/admin/article'" class="btn">Добавить статью</button>
     <div>
         <form action="/admin/category" method="GET">
             <div style="display: flex;gap: 20px;align-items: center;justify-content: center;">
@@ -42,7 +42,6 @@
                     <button type="submit" class="btn">Искать</button>
                 </div>
             </div>
-
         </form>
     </div>
     <table class="grid-table">
@@ -62,7 +61,9 @@
                 <td><strong>#{$article.id}</strong></td>
                 <td>{$article.name}</td>
                 <td>
-                    {$article.category}
+                    {foreach $article.category as $item}
+                        <span>{$item.name}</span> ,
+                    {/foreach}
                 </td>
                 <td>
                     {$article.description}

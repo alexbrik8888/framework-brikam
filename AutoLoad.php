@@ -7,8 +7,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-session_set_cookie_params(\App\Engine\Config::getInstance()->getConfig('session'));
-session_start();
 
 $inc = \App\Engine\Config::getInstance()->getConfig('boot_include');
 $rootDir = \App\Engine\Config::getInstance()->getConfig('root_dir');

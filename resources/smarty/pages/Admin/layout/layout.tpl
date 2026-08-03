@@ -12,10 +12,11 @@
 <aside>
     <h2>Админ-панель</h2>
     <nav>
-        <a href="/admin/" class="{if $active_page == 'dashboard'}active{/if}">Главная</a>
-        <a href="/admin/category" class="{if $active_page == 'category'}active{/if}">Добавить категорию</a>
-        <a href="/admin/article" class="{if $active_page == 'article'}active{/if}">Добавить статью</a>
-        <a href="/admin/list/article" class="{if $active_page == 'article'}active{/if}">Список статей</a>
+        <a href="/admin/" class="{if $active_page == "/admin"}active{/if}">Главная</a>
+        <a href="/admin/category" class="{if $active_page =="/admin/category"}active{/if}">Добавить категорию</a>
+        <a href="/admin/article" class="{if $active_page =="/admin/article"}active{/if}">Добавить статью</a>
+        <a href="/admin/list/article" class="{if $active_page == "/admin/list/article"}active{/if}">Список статей</a>
+        <a href="/admin/logout" class="{if $active_page == "/admin/logout"}active{/if}">Выйти</a>
     </nav>
 </aside>
 

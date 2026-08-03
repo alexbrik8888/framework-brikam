@@ -58,10 +58,12 @@ class Model {
      }
 
      public function getFirst() {
-
             $result = $this->query->getOne();
             if($result) {
-                $result = array_intersect_key($result, array_diff_key(array_fill_keys($this->fields, 1), array_fill_keys($this->hiddenFields, 1)));
+                if(!empty($this->hiddenFields)) {
+                    $result = array_intersect_key($result, array_diff_key(array_fill_keys($this->fields, 1), array_fill_keys($this->hiddenFields, 1)));
+                    return $result;
+                }
                 return $result;
             }
             return null;

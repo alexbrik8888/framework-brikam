@@ -23,6 +23,7 @@ class View {
             if(!empty( $value))
                 $this->viewEngine->assign($key, $value);
         }
+        $this->viewEngine->assign('active_page',Request::getInstance()->getPath());
         ob_start();
         $this->viewEngine->display($this->config['pages'].$template);
         $result = ob_get_clean();

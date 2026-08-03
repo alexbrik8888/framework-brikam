@@ -132,7 +132,7 @@ class DropZoneSimple {
             throw  new Error('Error attr filetarget  not found  add attr to tag');
             return false;
         }
-        this.cloneBody =this.body.cloneNode(true)
+        if(this.preview)
         this.cloneBody.querySelector('[preview]').style.display = 'none';
         return true;
     }
@@ -142,7 +142,9 @@ class DropZoneSimple {
             throw  new Error('Error attr preview  not found  add attr to tag');
             return false;
         }
-        Object.assign(this.preview.style,{display:'none'});
+        console.log(this.preview.querySelector('[show]'))
+        if(this.preview.querySelector('[show]').src == "")
+            Object.assign(this.preview.style,{display:'none'});
         return true;
     }
     addFileInput(fileInput) {

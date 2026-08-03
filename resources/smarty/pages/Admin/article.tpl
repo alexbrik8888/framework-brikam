@@ -26,7 +26,9 @@
             <label for="title">Название статьи *</label>
             <input type="text" id="name" name="name" value="{$article.name|default:''}" required placeholder="Введите заголовок статьи">
         </div>
-
+        {if isset($article.id)}
+            <input type="hiddent" id="id" name="id" value="{$article.id|default:''}">
+        {/if}
         <!-- Описание (анонс) -->
         <div class="form-group">
             <label for="description">Краткое описание (анонс)</label>
@@ -54,7 +56,12 @@
                 <div bodypreview class='upload-preview'>
                     <span class='upload-block-choose'>Выберите файл</span>
                     <div class='upload-preview-block' preview>
-                        <img show src="">
+                       {if isset($article.image) }
+                           <img show  src="/file/image?id={$article.image[0]['id']}">
+                       {else}
+                           <img show >
+                       {/if}
+
                     </div>
             </div>
             <input filetarget type='file' class='file-input' name='file'/>
@@ -67,8 +74,12 @@
             <label for="categories">Выберите категории (зажмите Ctrl / Cmd для выбора нескольких) *</label>
             <select   style="400px;height: 200px" id="category_id" multiple  name="category_id[]" multiple required>
                 {foreach $category as $item}
-                    <option value="{$item.id}">{$item.name}</option>
-                {/foreach}
+                        {if !in_array($item.id ,$article.category) }
+                            <option value="{$item.id}"  >{$item.name}</option>
+                        {else}
+                            <option value="{$item.id}"  selected >{$item.name}</option>
+                       {/if}
+               {/foreach}
             </select>
         </div>
         </div>

@@ -5,9 +5,9 @@ namespace App\Engine;
 use PDOStatement;
 
 class DbExceptionSQL {
-    public  $sql = '';
+    public  $sql = "";
     public function __construct($sql) {
-        $this->sql =   addslashes($sql);
+        $this->sql =   $sql;
     }
 }
 
@@ -92,8 +92,8 @@ class DB {
     }
 
 
-    protected function join(string $table, string|array $on = '', string $type = 'INNER') :self {
-        if(!empty($table))
+    protected function join(string|DbExceptionSQL $table, string|array $on = '', string $type = 'INNER') :self {
+        if(empty($table))
             throw new \Exception('table empty');
         if(!empty($on)) {
             if(is_array($on)){
@@ -115,7 +115,7 @@ class DB {
             return $this;
         }
         if($table instanceof DbExceptionSQL) {
-            $this->join[] = $type.' JOIN '. $table->sql;
+            $this->join[] = $type." JOIN ". $table->sql;
             return $this;
         }
         return $this;
@@ -243,7 +243,7 @@ class DB {
         $this->limit(1);
         $stmt =  $this->execute();
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        $stmt = null;
+       $stmt = null;
         return $result;
     }
     public function count() : int{
@@ -275,7 +275,7 @@ class DB {
         $fromElement = empty($this->from)?'': implode(' , ',$this->from);;
         $this->strQusery = "SELECT {$selectField} FROM {$fromElement}";
         if(!empty($this->join))
-            $this->strQusery .= implode(' ',$this->join);
+            $this->strQusery .=' '.implode(' ',$this->join);
         if(!empty($this->where))
             $this->strQusery .= " WHERE ".implode(' ',$this->where);
         if(!empty($this->group))
@@ -288,6 +288,8 @@ class DB {
             $this->strQusery .= " LIMIT ".$this->limit;
         if (!empty($this->offset))
             $this->strQusery .= " OFFSET ".$this->offset;
+
+
         return $this;
     }
 
