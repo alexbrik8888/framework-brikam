@@ -28,6 +28,7 @@ public  function  coonectImageArticl() {
     }
     public function getList()   {
         $rez =   parent::getList();
+
         foreach ($rez as &$article) {
             if(isset($article['image']))
                 $article['image'] = json_decode($article['image'],true);

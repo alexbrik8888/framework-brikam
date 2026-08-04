@@ -55,7 +55,7 @@ class DB {
             $this->from($table);
      }
     public function __destruct() {
-        //self::$pdo = null;
+       // self::$pdo = null;
     }
     private function  bilderSelct() {
         $select = (!empty($this->select))?$this->select:['*'];
@@ -163,7 +163,7 @@ class DB {
         return $this;
     }
     public function whereISNOTNULL(string $field,string $type = 'and') :self {
-        $this->where[] =  sprintf(" %s  %s  IS NOT NULL ", (count($this->where) > 1) ? $type : '',$field);
+        $this->where[] =  sprintf(" %s  %s  IS NOT NULL ", (count($this->where) >=1) ? $type : '',$field);
         return $this;
     }
 
@@ -175,7 +175,7 @@ class DB {
              $inParama[] = $paramName;
              $this->bindings[$paramName] = $item;
          }
-        $this->where[] =  sprintf(" %s %s IN ( %s ) ", (count($this->where) > 1) ? $type : '',$field, implode(' , ',$inParama));
+        $this->where[] =  sprintf(" %s %s IN ( %s ) ", (count($this->where) >= 1) ? $type : '',$field, implode(' , ',$inParama));
         return $this;
     }
     public function whereNOT_IN(string $field, array $value ,$type = 'and') :self {
@@ -185,7 +185,7 @@ class DB {
             $inParama[] = $paramName;
             $this->bindings[$paramName] = $item;
         }
-        $this->where[] =  sprintf(" %s %s NOT IN ( %s ) ", (count($this->where) > 1) ? $type : '',$field, implode(' , ',$inParama));
+        $this->where[] =  sprintf(" %s %s NOT IN ( %s ) ", (count($this->where) >= 1) ? $type : '',$field, implode(' , ',$inParama));
         return $this;
     }
     public function whereBetween(string $field,mixed $value1, mixed  $value2,string $type = 'and') :self {
@@ -193,7 +193,7 @@ class DB {
         $val2 =  ':' . str_replace('.', '_', $field) . '_b1_' . count($this->bindings);
         $this->bindings[$val1] = $value1;
         $this->bindings[$val2] = $value2;
-        $this->where[] =  sprintf(" %s  %s  BETWEEN  '%s' AND '%s' ",(count($this->where) > 1) ? $type : '', $field,$val1,$val2);
+        $this->where[] =  sprintf(" %s  %s  BETWEEN  '%s' AND '%s' ",(count($this->where) >= 1) ? $type : '', $field,$val1,$val2);
         return $this;
     }
 
@@ -202,12 +202,12 @@ class DB {
         $val2 =  ':' . str_replace('.', '_', $field) . '_b1_' . count($this->bindings);
         $this->bindings[$val1] = $value1;
         $this->bindings[$val2] = $value2;
-        $this->where[] =  sprintf(" %s  %s  NOT BETWEEN  '%s' AND '%s' ",(count($this->where) > 1) ? $type : '', $field,$val1,$val2);
+        $this->where[] =  sprintf(" %s  %s  NOT BETWEEN  '%s' AND '%s' ",(count($this->where) >= 1) ? $type : '', $field,$val1,$val2);
         return $this;
     }
     public function whereRaw($sql,$type = 'and') :self{
         if($sql  instanceof DbExceptionSQL) {
-            $this->where[] = ((count($this->where) > 1) ? $type : '').$sql->sql;
+            $this->where[] = ((count($this->where) >= 1) ? $type : '').$sql->sql;
         }
         return $this;
     }
@@ -232,7 +232,7 @@ class DB {
     }
 
     public function order(string $field, string $sort = 'asc'):self {
-        $this->order[] = printf(" %s %s",$field,$sort);
+        $this->order[] = sprintf(" %s %s",$field,$sort);
         return $this;
     }
     public function limit($limit){

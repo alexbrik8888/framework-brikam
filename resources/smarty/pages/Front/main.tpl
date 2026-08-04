@@ -13,7 +13,7 @@
                     <article class="card main-card">
                         <img src="file/image?id={$groupInfo.file_id}" alt="Превью">
                         <span class="badge">{$groupInfo.created_at}</span>
-                        <h3><a href="/article/1">{$groupInfo.article_title}</a></h3>
+                        <h3><a href="/article?id={$groupInfo.article_id}">{$groupInfo.article_title}</a></h3>
                         <p>{$groupInfo.article_description}</p>
                     </article>
             {/foreach}

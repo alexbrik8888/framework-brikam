@@ -83,7 +83,7 @@ class Controller extends BaseController {
     }
 
     public function articleAction() {
-        $article = new Articl();
+        $article = new Articl('*');
         $error = '';
         $param =  Request::getInstance()->getAllParams();
         if(Request::getInstance()->getMethod() == 'POST') {
@@ -118,7 +118,7 @@ class Controller extends BaseController {
             }
         }
         if(Request::getInstance()->getMethod() == 'GET')
-            $article->find('id',Request::getInstance()->getParam('id'));
+            $article->where('id',Request::getInstance()->getParam('id'));
         $articleData = $article->connectImage()->connectCategory()->getFirst();
         $categoryTemp = [];
         if(!empty($articleData['category'])) {

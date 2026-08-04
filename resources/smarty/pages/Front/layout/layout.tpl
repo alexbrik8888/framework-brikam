@@ -8,6 +8,7 @@
     {block name="styles"}
 
     {/block}
+    <script src="/js/globlaFunction.js"></script>
     {block name="scripts_top"}{/block}
 </head>
 <body>

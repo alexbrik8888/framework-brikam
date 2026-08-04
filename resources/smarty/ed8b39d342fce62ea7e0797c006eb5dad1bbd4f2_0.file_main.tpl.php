@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-04 09:29:50
+/* Smarty version 5.8.4, created on 2026-08-04 20:33:54
   from 'file:C:\OpenServer\domains\testwork\resources\smarty\pages/Front/main.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a7186de573342_42969169',
+  'unifunc' => 'content_6a72228258f878_46795969',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ed8b39d342fce62ea7e0797c006eb5dad1bbd4f2' => 
     array (
       0 => 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages/Front/main.tpl',
-      1 => 1785780262,
+      1 => 1785860630,
       2 => 'file',
     ),
   ),
@@ -20,20 +20,20 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a7186de573342_42969169 (\Smarty\Template $_smarty_tpl) {
+function content_6a72228258f878_46795969 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_17572927956a7186de54be57_83739268', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_10967019166a72228256e799_20077585', "content");
 ?>
 
 
 <?php $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "Front/layout/layout.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_17572927956a7186de54be57_83739268 extends \Smarty\Runtime\Block
+class Block_10967019166a72228256e799_20077585 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front';
@@ -66,7 +66,8 @@ $foreach1DoElse = false;
 " alt="Превью">
                         <span class="badge"><?php echo $_smarty_tpl->getValue('groupInfo')['created_at'];?>
 </span>
-                        <h3><a href="/article/1"><?php echo $_smarty_tpl->getValue('groupInfo')['article_title'];?>
+                        <h3><a href="/article?id=<?php echo $_smarty_tpl->getValue('groupInfo')['article_id'];?>
+"><?php echo $_smarty_tpl->getValue('groupInfo')['article_title'];?>
 </a></h3>
                         <p><?php echo $_smarty_tpl->getValue('groupInfo')['article_description'];?>
 </p>

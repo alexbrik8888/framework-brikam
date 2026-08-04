@@ -11,10 +11,16 @@ class Model {
     protected $query = null;
 
 
-    public function __construct() {
+    public function __construct( array|string $select = null) {
         $this->query = new DB();
         $this->query->limit(100);
         $this->query->from($this->table);
+        if(!is_null($select)) {
+            if(is_string($select))
+                $this->query->select($this->table.'.'.$select);
+            else
+                $this->query->select($select);
+        }
     }
 
     public function insertMultiple($data):bool {
@@ -99,7 +105,7 @@ class Model {
         } else if ($result){
             return $result;
         }
-        return null;
+        return [];
      }
      public function where($field,$value,$operation = '=',$type ='AND') {
          $this->query->where($field,$value,$operation,$type);

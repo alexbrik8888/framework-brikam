@@ -15,7 +15,13 @@ class View {
         $this->viewEngine->setCompileDir($this->config['compiledDir']);
         $this->viewEngine->setTemplateDir($this->config['templateDir']);
         $this->viewEngine->addTemplateDir($this->config['pages'], 'pages');
+        $this->viewEngine->registerPlugin(Smarty::PLUGIN_MODIFIER, 'build_http_url', function ($array,$add = []){
+            return http_build_query(array_merge($array,$add));
+        });
+
     }
+
+
 
     public function render($template, $data = []) {
         $result = null;

@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-04 09:27:32
+/* Smarty version 5.8.4, created on 2026-08-04 19:57:34
   from 'file:Front/layout/header.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a71865450d1a2_87713095',
+  'unifunc' => 'content_6a7219fe4ad187_38687494',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,16 +20,16 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a71865450d1a2_87713095 (\Smarty\Template $_smarty_tpl) {
+function content_6a7219fe4ad187_38687494 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
 ?><header class="main-header">
     <div class="logo">PORTAL<span>NEWS</span></div>
     <nav class="nav-categories">
         <?php
 $_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('main_category'), 'item');
-$foreach1DoElse = true;
+$foreach2DoElse = true;
 foreach ($_from ?? [] as $_smarty_tpl->getVariable('item')->value) {
-$foreach1DoElse = false;
+$foreach2DoElse = false;
 ?>
         <a href="/catalog?id=<?php echo $_smarty_tpl->getValue('item')['id'];?>
 "><?php echo $_smarty_tpl->getValue('item')['name'];?>

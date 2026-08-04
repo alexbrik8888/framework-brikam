@@ -32,7 +32,6 @@ protected array $fields =[
         $join =  '(SELECT   JSON_ARRAYAGG(JSON_OBJECT(
         "id", category_articl.id,
         "category_id",category_articl.category_id, 
-        "articl_id", category_articl.articl_id,
         "name", c.name        
         )) as "category" , category_articl.articl_id,category_articl.category_id  FROM   category_articl  
         LEFT JOIN category AS c ON category_articl.category_id = c.id 
@@ -41,7 +40,11 @@ protected array $fields =[
         $this->Query()->select('aricle_category.category');
         return $this;
     }
-
+    public function connectImageSimple() {
+        $this->Query()->joinLeft('file',' '.$this->table.'.id = file.abstract_id AND file.type_id = 1 ');
+        $this->Query()->select('file.id as "file_id"');
+        return $this;
+    }
     public function getList()   {
         $rez =   parent::getList();
         foreach ($rez as &$article) {
@@ -108,6 +111,8 @@ protected array $fields =[
         asort($groupName);
         return ['group' => $group,'group_name'=> $groupName];
     }
+
+
 }
 
 

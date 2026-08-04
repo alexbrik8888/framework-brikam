@@ -43,19 +43,21 @@ class Controller extends BaseController {
         }
         $param = Request::getInstance()->getAllParams();
         $articl = new CategoryArticl();
-        $articl->setLimit(2)
+        $articl->setLimit(5)
             ->coonectArticlView()
             ->coonectImageArticl()
             ->coonectArticl()->where($articl->getTable().'.category_id',$catgory_id);
         if(isset($param['order']) && !empty($param['order'] )){
             switch ($param['order']) {
                 case 'date':
-                    $articl->Query()->OrderBy('create_date','DESC');
+                    $articl->Query()->order('articl.created_at','DESC');
                     break;
                 case 'view':
-                    $articl->Query()->OrderBy('view','DESC');
+                    $articl->Query()->order('articl_view.view','DESC');
                     break;
             }
+        } else {
+            $articl->Query()->order('articl.created_at','DESC');
         }
         if(isset($param['page']) && !empty($param['page'] ))
             $articl->setPage($param['page']);
@@ -63,16 +65,28 @@ class Controller extends BaseController {
             'main_category' =>$this->mainCategory,
             'category' => (new Category())->find('id',$catgory_id)->getFirst(),
             'list_articl' => $articl->getList(),
-            'pagination' => $articl->getPagination()
+            'pagination' => $articl->getPagination(),
+            'query_param' => $param,
         ]);
     }
     public function detailsAction() {
         $articl_id =  Request::getInstance()->getParam('id');
-        $articl = (new Articl())->coonectArticlView()->find('id',$articl_id)->getFirst();
+        $articl_ = new Articl('*');
+        $articl_->connectImageSimple()->connectCategory()->coonectArticlView()->where($articl_->getTable().'.id',$articl_id);
+        $articl = $articl_ ->getFirst();
+        $param = Request::getInstance()->getAllParams();
+        $categories =  array_column($articl['category'],'id');
+        $recomnendation_ = new CategoryArticl();
+        $recomnendation_->Query()->whereIN($recomnendation_->getTable().'.category_id',$categories)
+            ->order($articl_->getTable().'.created_at','DESC');
+        $recomnendation = $recomnendation_->setLimit(3)->coonectImageArticl()->coonectArticl()->getList();
         if($articl) {
             (new ArticleView())->save(['articl_id' => $articl['id'], 'view' => $articl['view']+1]);
-            return (new  View())->render('/Front/details.tpl', [
+            return (new View())->render('/Front/details.tpl', [
                 'main_category' => $this->mainCategory,
+                'query_param' => $param,
+                'articl' => $articl,
+                'recommendation'=>$recomnendation
             ]);
         } else {
             header('Location: /');
