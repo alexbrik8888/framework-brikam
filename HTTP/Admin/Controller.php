@@ -2,15 +2,14 @@
 namespace HTTP\Admin;
 use App\Engine\Auth;
 use App\Engine\BaseController;
-use App\Engine\Cache;
-use App\Engine\DB;
 use App\Engine\Request;
+use App\Engine\User\UserAmin;
 use App\Engine\View;
 use App\Model\Articl;
+use App\Model\ArticleView;
 use App\Model\File;
 use App\Model\Filter\Category;
 use App\Model\Filter\CategoryArticl;
-use App\Model\User\UserAmin;
 
 class Controller extends BaseController {
    public function callAction($action, $params){
@@ -91,6 +90,7 @@ class Controller extends BaseController {
             try {
                 $dataArticle = $article->save($param);
                 if ($dataArticle) {
+                    (new ArticleView())->save(['articl_id' => $dataArticle['id']]);
                     $dataArticle['abstract_id'] = $dataArticle['id'];
                     $dataArticle['type_id'] = 1;
                     unset($dataArticle['id']);

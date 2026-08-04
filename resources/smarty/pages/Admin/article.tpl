@@ -3,7 +3,7 @@
 
 {block name="title"}Добавить статью{/block}
 
-{block name="script_top"}
+{block name="scripts_top"}
     <script>
         class FileReaderEx extends FileReader{
             constructor() {

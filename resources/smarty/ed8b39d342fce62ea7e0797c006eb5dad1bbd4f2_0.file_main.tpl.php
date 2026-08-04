@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-03 21:04:28
+/* Smarty version 5.8.4, created on 2026-08-04 09:29:50
   from 'file:C:\OpenServer\domains\testwork\resources\smarty\pages/Front/main.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a70d82c4ab119_77523014',
+  'unifunc' => 'content_6a7186de573342_42969169',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,20 +20,20 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a70d82c4ab119_77523014 (\Smarty\Template $_smarty_tpl) {
+function content_6a7186de573342_42969169 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_17364118716a70d82c491576_59689479', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_17572927956a7186de54be57_83739268', "content");
 ?>
 
 
 <?php $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "Front/layout/layout.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_17364118716a70d82c491576_59689479 extends \Smarty\Runtime\Block
+class Block_17572927956a7186de54be57_83739268 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front';

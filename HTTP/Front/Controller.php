@@ -7,6 +7,7 @@ use App\Engine\Request;
 use App\Engine\View;
 
 use App\Model\Articl;
+use App\Model\ArticleView;
 use App\Model\File;
 use App\Model\Filter\Category;
 use App\Model\Filter\CategoryArticl;
@@ -17,7 +18,7 @@ class Controller extends BaseController {
     private $mainCategory;
     public function __construct() {
         $catgory  =  new Category();
-        $catgory->Query()->whereRaw( (new DbExceptionSQL(' parent_id IS NULL ')));
+        $catgory->Query()->where('parent_id',0);
         $this->mainCategory = $catgory->getList();
     }
 
@@ -27,8 +28,6 @@ class Controller extends BaseController {
    }
 
     public function indexAction() {
-
-
         $listcategory  = new Articl();
         return  (new  View())->render('/Front/main.tpl',[
             'main_category' =>$this->mainCategory,
@@ -42,9 +41,24 @@ class Controller extends BaseController {
             header('Location: /');
             exit();
         }
-
+        $param = Request::getInstance()->getAllParams();
         $articl = new CategoryArticl();
-        $articl->setLimit(2)->coonectImageArticl()->coonectArticl()->where($articl->getTable().'.category_id',$catgory_id);
+        $articl->setLimit(2)
+            ->coonectArticlView()
+            ->coonectImageArticl()
+            ->coonectArticl()->where($articl->getTable().'.category_id',$catgory_id);
+        if(isset($param['order']) && !empty($param['order'] )){
+            switch ($param['order']) {
+                case 'date':
+                    $articl->Query()->OrderBy('create_date','DESC');
+                    break;
+                case 'view':
+                    $articl->Query()->OrderBy('view','DESC');
+                    break;
+            }
+        }
+        if(isset($param['page']) && !empty($param['page'] ))
+            $articl->setPage($param['page']);
         return  (new  View())->render('/Front/catalog.tpl',[
             'main_category' =>$this->mainCategory,
             'category' => (new Category())->find('id',$catgory_id)->getFirst(),
@@ -53,9 +67,17 @@ class Controller extends BaseController {
         ]);
     }
     public function detailsAction() {
-        return  (new  View())->render('/Front/details.tpl',[
-            'main_category' =>$this->mainCategory,
-        ]);
+        $articl_id =  Request::getInstance()->getParam('id');
+        $articl = (new Articl())->coonectArticlView()->find('id',$articl_id)->getFirst();
+        if($articl) {
+            (new ArticleView())->save(['articl_id' => $articl['id'], 'view' => $articl['view']+1]);
+            return (new  View())->render('/Front/details.tpl', [
+                'main_category' => $this->mainCategory,
+            ]);
+        } else {
+            header('Location: /');
+            exit();
+        }
     }
 
 

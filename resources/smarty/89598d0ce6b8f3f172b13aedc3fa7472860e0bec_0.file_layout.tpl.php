@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-03 16:54:38
+/* Smarty version 5.8.4, created on 2026-08-04 09:27:32
   from 'file:Front/layout/layout.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a709d9e8c5674_97895611',
+  'unifunc' => 'content_6a718654384688_95539817',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -21,7 +21,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:Front/layout/header.tpl' => 1,
   ),
 ))) {
-function content_6a709d9e8c5674_97895611 (\Smarty\Template $_smarty_tpl) {
+function content_6a718654384688_95539817 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -33,33 +33,33 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
     <title>Главная — PORTAL NEWS</title>
     <link rel="stylesheet"   href="/css/style.css">
     <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_5068361866a709d9e8aed41_02503994', "styles");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_10443850246a7186543161b6_75499309', "styles");
 ?>
 
     <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_6548822346a709d9e8b2583_64544210', "scripts_top");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_12433545856a7186543199e6_97720289', "scripts_top");
 ?>
 
 </head>
 <body>
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_20052256796a709d9e8b5c33_63526726', "header");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_5845956236a71865431cbe3_11406354', "header");
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_282094006a709d9e8c1878_22523667', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1815711956a7186543813d9_19589701', "content");
 ?>
 
 </body>
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_4597651046a709d9e8c3a31_93783291', "scripts_bottom");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_12849201916a718654382ee2_92727233', "scripts_bottom");
 ?>
 
 </html>
 <?php }
 /* {block "styles"} */
-class Block_5068361866a709d9e8aed41_02503994 extends \Smarty\Runtime\Block
+class Block_10443850246a7186543161b6_75499309 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
@@ -71,7 +71,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "styles"} */
 /* {block "scripts_top"} */
-class Block_6548822346a709d9e8b2583_64544210 extends \Smarty\Runtime\Block
+class Block_12433545856a7186543199e6_97720289 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
@@ -79,7 +79,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "scripts_top"} */
 /* {block "header"} */
-class Block_20052256796a709d9e8b5c33_63526726 extends \Smarty\Runtime\Block
+class Block_5845956236a71865431cbe3_11406354 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
@@ -90,7 +90,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "header"} */
 /* {block "content"} */
-class Block_282094006a709d9e8c1878_22523667 extends \Smarty\Runtime\Block
+class Block_1815711956a7186543813d9_19589701 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
@@ -98,7 +98,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "content"} */
 /* {block "scripts_bottom"} */
-class Block_4597651046a709d9e8c3a31_93783291 extends \Smarty\Runtime\Block
+class Block_12849201916a718654382ee2_92727233 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';

@@ -2,7 +2,7 @@
 {extends file="Admin/layout/layout.tpl"}
 
 {block name="title"}Добавить категорию{/block}
-{block name="script_top"}
+{block name="scripts_top"}
 {literal}
     <script>
         function deleteArticle(id){

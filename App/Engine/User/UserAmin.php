@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\User;
+namespace App\Engine\User;
 
 use app\Engine\extension\AuthFunction;
 use App\Engine\Model;

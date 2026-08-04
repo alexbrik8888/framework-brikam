@@ -5,7 +5,7 @@
     <title>{block name="title"}Панель управления{/block}</title>
     <link rel="stylesheet"   href="/css/admin.css">
     {block name="styles"}{/block}
-    {block name="script_top"}{/block}
+    {block name="scripts_top"}{/block}
 </head>
 <body>
 

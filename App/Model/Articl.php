@@ -10,6 +10,12 @@ protected string $table = 'articl';
 protected array $fields =[
     'id','name','text','description','published_at','created_at','updated_at'
 ];
+
+    public  function  coonectArticlView() {
+        $this->Query()->joinLeft('articl_view',' '.$this->table.'.id = articl_view.articl_id ');
+        $this->Query()->select(' IFNULL(articl_view.view,0) as "view"');
+        return $this;
+    }
     public function connectImage() {
         $join =  '(SELECT   JSON_ARRAYAGG(JSON_OBJECT(
         "id", file.id,
