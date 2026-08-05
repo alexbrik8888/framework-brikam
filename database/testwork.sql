@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 04 2026 г., 20:37
+-- Время создания: Авг 05 2026 г., 08:36
 -- Версия сервера: 10.6.7-MariaDB-log
 -- Версия PHP: 8.1.5
 
@@ -321,19 +321,24 @@ ALTER TABLE `category`
 -- Индексы таблицы `category_articl`
 --
 ALTER TABLE `category_articl`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category` (`category_id`),
+  ADD KEY `articl` (`id`);
 
 --
 -- Индексы таблицы `file`
 --
 ALTER TABLE `file`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `abstruct` (`abstract_id`),
+  ADD KEY `type` (`type_id`);
 
 --
 -- Индексы таблицы `user_admin`
 --
 ALTER TABLE `user_admin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц

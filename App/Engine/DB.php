@@ -73,6 +73,17 @@ class DB {
         );
     }
 
+    public function tableExists(string $table): bool {
+        $stmt = self::$pdo->prepare("SELECT COUNT(*) 
+                                     FROM information_schema.tables 
+                                     WHERE table_schema = DATABASE() 
+                                    AND table_name = :table_name");
+        $stmt->execute(['table_name' => $table]);
+        return(bool) $stmt->fetchColumn();
+    }
+    public function Exists(): bool {
+           return (bool)$this->count();
+    }
     public static function raw($sql):DbExceptionSQL {return new DbExceptionSQL($sql);}
 
     public function select(string|array $select): self{
