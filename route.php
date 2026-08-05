@@ -12,3 +12,6 @@ Route::getInstance()->addRoute('/admin/article',\HTTP\Admin\Controller::class,'a
 Route::getInstance()->addRoute('/admin/list/article',\HTTP\Admin\Controller::class,'articleListAction');
 Route::getInstance()->addRoute('/admin/login',\HTTP\Admin\Controller::class,'loginAction');
 Route::getInstance()->addRoute('/admin/logout',\HTTP\Admin\Controller::class,'logoutAction');
+
+
+Route::getInstance()->addRoute('/install/run',database\Seeders::class,'runAction');

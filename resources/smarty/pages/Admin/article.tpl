@@ -27,7 +27,7 @@
             <input type="text" id="name" name="name" value="{$article.name|default:''}" required placeholder="Введите заголовок статьи">
         </div>
         {if isset($article.id)}
-            <input type="hiddent" id="id" name="id" value="{$article.id|default:''}">
+            <input type="hidden" id="id" name="id" value="{$article.id|default:''}">
         {/if}
         <!-- Описание (анонс) -->
         <div class="form-group">

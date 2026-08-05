@@ -4,24 +4,57 @@ namespace App\Model;
 
 use App\Engine\Model;
 
-class ArticleView extends Model {
-    protected string $table = 'articl_view';
-    protected  $primaryKey = 'articl_id';
+/**
+ * Модель для учета и обновления количества просмотров статей.
+ */
+class ArticleView extends Model
+{
+    /** @var string Название таблицы в БД */
+    protected string $table = 'article_views';
+
+    /** @var string Первичный ключ таблицы */
+    protected string $primaryKey = 'article_id';
+
+    /** @var array<string> Разрешенные поля для заполнения */
     protected array $fields = [
-        'articl_id',
+        'article_id',
         'view'
     ];
-    public function  save(array $data) {
-        $data =  array_intersect_key($data,array_fill_keys($this->fields,1));
-        if(empty($data))
+
+    /**
+     * Сохраняет или обновляет количество просмотров статьи (UPSERT).
+     *
+     * @param array $data Данные для сохранения (должны содержать articl_id)
+     * @return array|bool Возвращает массив сохраненных данных или false в случае ошибки
+     */
+    public function save(array $data): array|bool
+    {
+        // Фильтруем входящие данные, оставляя только разрешенные поля из $this->fields
+        $data = array_intersect_key($data, array_flip($this->fields));
+
+        if (empty($data) || !isset($data[$this->primaryKey])) {
             return false;
-        if(isset($data[$this->primaryKey])) {
-            $countUp =  $this->query->where($this->primaryKey, $data[$this->primaryKey], '=')->update($this->table, $data);
-            if($countUp === false)
-                return false;
-            if($countUp == 0)
-                $data[$this->primaryKey] = $this->query->insert($this->table,$data);
-            return $data;
         }
-     }
+
+        $articleId = $data[$this->primaryKey];
+
+        // Пробуем обновить существующую запись
+        $updatedRows = $this->query
+            ->where($this->primaryKey, $articleId, '=')
+            ->update($this->table, $data);
+
+        if ($updatedRows === false) {
+            return false;
+        }
+
+        // Если ни одна строка не обновилась — запись отсутствует, создаем новую
+        if ($updatedRows === 0) {
+            $inserted = $this->query->insert($this->table, $data);
+            if ($inserted === false) {
+                return false;
+            }
+        }
+
+        return $data;
+    }
 }

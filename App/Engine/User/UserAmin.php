@@ -7,7 +7,7 @@ use App\Engine\Model;
 
 class  UserAmin extends Model {
     use AuthFunction;
-    protected string $table = 'user_admin';
+    protected string $table = 'users';
     protected array $fields = [
             'id',
             'email',

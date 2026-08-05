@@ -1,162 +1,305 @@
 <?php
+
 namespace HTTP\Admin;
+
 use App\Engine\Auth;
 use App\Engine\BaseController;
 use App\Engine\Request;
 use App\Engine\User\UserAmin;
 use App\Engine\View;
-use App\Model\Articl;
-use App\Model\ArticleView;
+use App\Model\Article;
 use App\Model\File;
 use App\Model\Filter\Category;
-use App\Model\Filter\CategoryArticl;
+use App\Model\Filter\CategoryArticle;
 
-class Controller extends BaseController {
-   public function callAction($action, $params){
-            if($action == 'loginAction'){
-                return parent::callAction($action, $params);
-            } else {
-                if(Auth::getInstance()->setModel(UserAmin::class)->check()) {
-                    return parent::callAction($action, $params);
-                }else
-                    return parent::callAction('loginAction', $params);
-            }
-   }
+/**
+ * Базовый контроллер административной панели.
+ * Отвечает за авторизацию, управление категориями и статьями.
+ */
+class Controller extends BaseController
+{
+    /**
+     * Перехват и проверка прав доступа перед вызовом действия.
+     *
+     * @param string $action Имя метода/действия.
+     * @param array $params Параметры маршрута.
+     * @return mixed
+     */
+    public function callAction($action, $params)
+    {
+        // Разрешаем доступ к логину без авторизации
+        if ($action === 'loginAction') {
+            return parent::callAction($action, $params);
+        }
 
-    public function indexAction() {
-        return  (new  View())->render('/Admin/main.tpl');
+        // Проверяем авторизацию пользователя с ролью Admin
+        $isAuthorized = Auth::getInstance()
+            ->setModel(UserAmin::class)
+            ->check();
+
+        if ($isAuthorized) {
+            return parent::callAction($action, $params);
+        }
+
+        // Если не авторизован — перенаправляем на логин
+        return parent::callAction('loginAction', $params);
     }
-    public function categoryAction() {
-        $categor = new Category();
-        $categor->setLimit(10);
-        $param =  Request::getInstance()->getAllParams();
 
-        if(Request::getInstance()->getMethod() == 'POST') {
-            $categor->save($param);
+    /**
+     * Главная страница административной панели.
+     *
+     * @return string Скомпилированный шаблон главной страницы.
+     */
+    public function indexAction(): string
+    {
+        return (new View())->render('/Admin/main.tpl');
+    }
+
+    /**
+     * Управление категориями (Просмотр, Фильтрация, Создание/Редактирование, Удаление).
+     *
+     * @return string Скомпилированный шаблон управления категориями.
+     */
+    public function categoryAction(): string
+    {
+        $category = new Category();
+        $category->setLimit(10);
+
+        $request = Request::getInstance();
+        $params = $request->getAllParams();
+        $method = $request->getMethod();
+
+        // 1. Создание или обновление категории (POST)
+        if ($method === 'POST') {
+            $category->save($params);
             header('Location: ' . $_SERVER['REQUEST_URI']);
-            exit; // Обязательно завершаем скрипт
+            exit;
         }
-        if(Request::getInstance()->getMethod() == 'GET'){
-            if(isset($param['name']) && !empty($param['name']))
-                $categor->where('name','%'.$param['name'].'%','LIKE');
-            if(isset($param['description']) && !empty($param['description']))
-                 $categor->where('description','%'.$param['description'].'%','LIKE');
-            if(isset($param['parent_id']) && !empty($param['parent_id']))
-                $categor->where('parent_id',$param['parent_id'],'=');
-            if(isset($param['page']) && !empty($param['page']))
-                $categor->setPage($param['page']);
+
+        // 2. Фильтрация и пагинация (GET)
+        if ($method === 'GET') {
+            if (!empty($params['name'])) {
+                $category->where('name', '%' . $params['name'] . '%', 'LIKE');
+            }
+            if (!empty($params['description'])) {
+                $category->where('description', '%' . $params['description'] . '%', 'LIKE');
+            }
+            if (!empty($params['parent_id'])) {
+                $category->where('parent_id', $params['parent_id'], '=');
+            }
+            if (!empty($params['page'])) {
+                $category->setPage($params['page']);
+            }
         }
-        if(Request::getInstance()->getMethod() == 'DELETE'){
-            $categor->where('id',Request::getInstance()->getParam('id'))->delete();
+
+        // 3. Удаление категории (DELETE)
+        if ($method === 'DELETE') {
+            $categoryId = $request->getParam('id');
+            if ($categoryId) {
+                $category->where('id', $categoryId)->delete();
+            }
         }
-        return  (new  View())->render('/Admin/category.tpl',[
-            'category_list' =>$categor->getList() ,
-            'pagination' =>$categor->getPagination(),
-            'parent' =>  $categor->newQuery()->getList()
+
+        return (new View())->render('/Admin/category.tpl', [
+            'category_list' => $category->getList(),
+            'pagination'    => $category->getPagination(),
+            'parent'        => $category->newQuery()->getList()
         ]);
     }
 
-    public function articleListAction() {
-        $article = new Articl();
+    /**
+     * Список статей (Просмотр, Фильтрация, Удаление).
+     *
+     * @return string Скомпилированный шаблон списка статей.
+     */
+    public function articleListAction(): string
+    {
+        $article = new Article();
         $article->setLimit(10);
         $article->Query()->select('*');
-        $param =  Request::getInstance()->getAllParams();
-        if(Request::getInstance()->getMethod() == 'GET'){
-            if(isset($param['name']) && !empty($param['name']))
-                $article->where('name','%'.$param['name'].'%','LIKE','OR');
-            if(isset($param['description']) && !empty($param['description']))
-                $article->where('description','%'.$param['description'].'%','LIKE' ,'OR');
-            if(isset($param['category_id']) && !empty($param['category_id']))
-                $article->Query()->whereIN('category_id',$param['category_id'],'OR');
-            if(isset($param['page']) && !empty($param['page'] ))
-                $article->setPage($param['page']);
+
+        $request = Request::getInstance();
+        $params = $request->getAllParams();
+        $method = $request->getMethod();
+
+        // 1. Фильтрация по совпадениям и категориям (GET)
+        if ($method === 'GET') {
+            if (!empty($params['name'])) {
+                $article->where('name', '%' . $params['name'] . '%', 'LIKE', 'OR');
+            }
+            if (!empty($params['description'])) {
+                $article->where('description', '%' . $params['description'] . '%', 'LIKE', 'OR');
+            }
+            if (!empty($params['category_id'])) {
+                $article->Query()->whereIN('category_id', $params['category_id'], 'OR');
+            }
+            if (!empty($params['page'])) {
+                $article->setPage($params['page']);
+            }
         }
-        if(Request::getInstance()->getMethod() == 'DELETE'){
-            $article->where('id',Request::getInstance()->getParam('id'))->delete();
+
+        // 2. Удаление статьи (DELETE)
+        if ($method === 'DELETE') {
+            $articleId = $request->getParam('id');
+            if ($articleId) {
+                $article->where('id', $articleId)->delete();
+            }
         }
+
         $articleData = $article->connectCategory()->getList();
-        return  (new  View())->render('/Admin/list_article.tpl',[
-            'article_list' =>$articleData,
-            'pagination' =>$article->getPagination(),
-            'category' =>  (new Category())->setLimit('')->getList(),
+
+        return (new View())->render('/Admin/list_article.tpl', [
+            'article_list' => $articleData,
+            'pagination'   => $article->getPagination(),
+            'category'     => (new Category())->setLimit('')->getList(),
         ]);
     }
 
-    public function articleAction() {
-        $article = new Articl('*');
+    /**
+     * Редактирование и создание статьи с привязкой категорий и загрузкой файлов.
+     *
+     * @return string Скомпилированный шаблон формы статьи.
+     */
+    public function articleAction(): string
+    {
+        $article = new Article('*');
         $error = '';
-        $param =  Request::getInstance()->getAllParams();
-        if(Request::getInstance()->getMethod() == 'POST') {
+
+        $request = Request::getInstance();
+        $params = $request->getAllParams();
+        $method = $request->getMethod();
+
+        // 1. Сохранение статьи, ее категорий и прикрепленных файлов (POST)
+        if ($method === 'POST') {
             try {
-                $dataArticle = $article->save($param);
+                $dataArticle = $article->save($params);
+
                 if ($dataArticle) {
-                    (new ArticleView())->save(['articl_id' => $dataArticle['id']]);
-                    $dataArticle['abstract_id'] = $dataArticle['id'];
+                    $abstractId = $dataArticle['id'];
+                    $dataArticle['abstract_id'] = $abstractId;
                     $dataArticle['type_id'] = 1;
                     unset($dataArticle['id']);
-                    $category  = [];
-                    foreach ($param['category_id'] as $cId){
-                        $category[] = ['category_id'=> $cId ,'articl_id'=>$dataArticle['abstract_id']];
+
+                    // Формируем связи категории с текущей статьёй
+                    $categoriesToInsert = [];
+                    if (!empty($params['category_id']) && is_array($params['category_id'])) {
+                        foreach ($params['category_id'] as $cId) {
+                            $categoriesToInsert[] = [
+                                'category_id' => $cId,
+                                'article_id'  => $abstractId
+                            ];
+                        }
                     }
-                    (new  CategoryArticl())->find('articl_id',$dataArticle['abstract_id'])->delete();
-                    $result =  (new  CategoryArticl())->insertMultiple($category);
-                    if(!$result) {
-                        $error = 'ошибка при сохранении категорий';
+
+                    // Перезаписываем связи категорий
+                    $categoryModel = new CategoryArticle();
+                    $categoryModel->find('article_id', $abstractId)->delete();
+
+                    if (!empty($categoriesToInsert)) {
+                        $isCategorySaved = $categoryModel->insertMultiple($categoriesToInsert);
+                        if (!$isCategorySaved) {
+                            $error = 'Ошибка при сохранении категорий';
+                        }
                     }
-                    $result = (new File())->save(array_merge($dataArticle, $_FILES[array_key_first($_FILES)]));
-                    if ($result) {
-                        header('Location: ' . '/admin/list/article');
-                        exit; // Обязательно завершаем скрипт
-                    } else {
-                        $error = 'ошибка при сохранении файла';
+
+                    // Обновляем прикрепленные файлы
+                    $fileModel = new File();
+                    $fileModel->where('abstract_id', $abstractId)->where('type_id', 1)->delete();
+
+                    // Безопасная извлечение данных из массива $_FILES
+                    $firstFileKey = array_key_first($_FILES);
+                    $fileData = $firstFileKey ? $_FILES[$firstFileKey] : [];
+
+                    $isFileSaved = $fileModel->save(array_merge($dataArticle, $fileData));
+
+                    if ($isFileSaved) {
+                        $redirectUrl = isset($params['id'])
+                            ? '/admin/article?id=' . $abstractId
+                            : '/admin/list/article';
+
+                        header('Location: ' . $redirectUrl);
+                        exit;
                     }
+
+                    $error = $error ?: 'Ошибка при сохранении файла';
                 } else {
-                    $error = 'ошибка при сохранении данных';
+                    $error = 'Ошибка при сохранении данных';
                 }
-            } catch (\Throwable $e){
-                d($e->getMessage(),$e->getCode(),$e->getFile(),$e->getLine());
+            } catch (\Throwable $e) {
+                // В продакшене рекомендуется логировать $e->getMessage() вместо дампа
+                d($e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine());
             }
         }
-        if(Request::getInstance()->getMethod() == 'GET')
-            $article->where('id',Request::getInstance()->getParam('id'));
+
+        // 2. Получение данных для редактирования (GET)
+        if ($method === 'GET' && $request->getParam('id')) {
+            $article->where('id', $request->getParam('id'));
+        }
+
         $articleData = $article->connectImage()->connectCategory()->getFirst();
-        $categoryTemp = [];
-        if(!empty($articleData['category'])) {
-            foreach ($articleData['category'] as $cId) {
-                $categoryTemp[] = $cId['category_id'];
-            }
+
+        // Оптимизированный выбор категорий с помощью array_column
+        if (!empty($articleData['category']) && is_array($articleData['category'])) {
+            $articleData['category'] = array_column($articleData['category'], 'category_id');
+        } else {
+            $articleData['category'] = [];
         }
-        $articleData['category'] = $categoryTemp;
+
         $article->Query()->select('*');
-        return  (new  View())->render('/Admin/article.tpl',[
-            'article' =>  $articleData ,
-            'category' =>  (new Category())->setLimit('')->getList(),
-            'error' => $error
+
+        return (new View())->render('/Admin/article.tpl', [
+            'article'  => $articleData,
+            'category' => (new Category())->setLimit('')->getList(),
+            'error'    => $error
         ]);
     }
 
-    public function loginAction() {
-       $error ='';
-       if(Request::getInstance()->getMethod() == 'POST') {
-           $params = Request::getInstance()->getAllParams();
-           if(isset($params['email']) && isset($params['password'])) {
-              $result = Auth::getInstance()->setModel(UserAmin::class)->checkCreadantion(['email'=> $params['email'],'password'=> md5($params['password'])]);
-              if($result){
-                   header('Location: /admin');
-                   exit();
-              } else {
-                   $error = 'Неверный  логин  пароль';
-               }
-           } else  {
-               $error = 'Нет заполнены данные';
-           }
-       }
+    /**
+     * Авторизация администратора.
+     *
+     * @return string Скомпилированный шаблон входа.
+     */
+    public function loginAction(): string
+    {
+        $error = '';
+        $request = Request::getInstance();
 
-        return  (new  View())->render('/Admin/login.tpl',['error_message'=>$error]);
+        if ($request->getMethod() === 'POST') {
+            $params = $request->getAllParams();
+
+            if (!empty($params['email']) && !empty($params['password'])) {
+                // ВАЖНО: Рекомендуется передавать чистый пароль в метод checkCreadantion
+                // и сверять внутри с помощью password_verify(), а не передавать md5()
+                $isAuth = Auth::getInstance()
+                    ->setModel(UserAmin::class)
+                    ->checkCreadantion([
+                        'email'    => $params['email'],
+                        'password' => md5($params['password']) // Замените на password_hash / password_verify
+                    ]);
+
+                if ($isAuth) {
+                    header('Location: /admin');
+                    exit;
+                }
+
+                $error = 'Неверный логин или пароль';
+            } else {
+                $error = 'Не все данные заполнены';
+            }
+        }
+
+        return (new View())->render('/Admin/login.tpl', ['error_message' => $error]);
     }
-    public function logoutAction() {
-       unset($_SESSION['id'],$_SESSION['user_info']);
+
+    /**
+     * Выход из системы и уничтожение сессии.
+     *
+     * @return void
+     */
+    public function logoutAction(): void
+    {
+        unset($_SESSION['id'], $_SESSION['user_info']);
         header('Location: /admin');
-        exit();
+        exit;
     }
 }

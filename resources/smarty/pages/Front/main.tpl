@@ -11,7 +11,11 @@
             {foreach  $list_category['group'][$id] as $id =>$groupInfo }
                     <!-- Пост 1 (Главная новость категории) -->
                     <article class="card main-card">
-                        <img src="file/image?id={$groupInfo.file_id}" alt="Превью">
+                        {if $groupInfo.file_id != NULL}
+                        <img src="file/image?id={$groupInfo.file_id}" alt="{$groupInfo.article_title}">
+                        {else }
+                            <img src="/public/img/no-image-icon-23494.png" alt="Превью">
+                        {/if}
                         <span class="badge">{$groupInfo.created_at}</span>
                         <h3><a href="/article?id={$groupInfo.article_id}">{$groupInfo.article_title}</a></h3>
                         <p>{$groupInfo.article_description}</p>

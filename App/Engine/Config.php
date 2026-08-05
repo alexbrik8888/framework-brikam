@@ -1,46 +1,108 @@
 <?php
 
 namespace App\Engine;
+
+use Exception;
+
+/**
+ * Класс менеджер конфигурации приложения (Singleton).
+ * Отвечает за загрузку и предоставление настроек из файла конфигурации.
+ */
 class Config
 {
-    private $path_config = '../config/config.php';
+    /**
+     * Путь к файлу конфигурации
+     */
+    private string $pathConfig;
 
-    private $config = [];
+    /**
+     * Массив загруженных параметров конфигурации
+     */
+    private array $config = [];
 
-    public static $inst = null;
+    /**
+     * Единый экземпляр класса Config
+     */
+    private static ?self $instance = null;
 
-
-    public function __construct()
+    /**
+     * Приватный конструктор для реализации паттерна Singleton.
+     * Автоматически загружает файл конфигурации при инициализации.
+     *
+     * @throws Exception Если файл конфигурации не найден
+     */
+    private function __construct()
     {
-        $this->Init();
+        // Абсолютный путь от корневой директории приложения
+        $this->pathConfig = dirname(__DIR__, 2) . '/config/config.php';
+        $this->init();
     }
 
-    public static function getInstance()
+    /**
+     * Запрещаем клонирование объекта
+     */
+    private function __clone()
     {
-        if (is_null(self::$inst))
-            self::$inst = new Config();
-        return self::$inst;
     }
 
-    public function Init()
+    /**
+     * Возвращает единственный экземпляр класса Config.
+     *
+     * @return self
+     */
+    public static function getInstance(): self
     {
-        if (!file_exists($this->path_config))
-            throw new \Exception('Конфиг файла нет');
-        $this->config = include $this->path_config;
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
-    public function SetPathConfig($path_config)
+    /**
+     * Загрузка параметров из файла конфигурации в память
+     *
+     * @throws Exception Если файл конфигурации не существует
+     */
+    public function init(): void
     {
-        $this->path_config = $path_config;
+        if (!file_exists($this->pathConfig)) {
+            throw new Exception("Файл конфигурации не найден по пути: {$this->pathConfig}");
+        }
+
+        $this->config = include $this->pathConfig;
+    }
+
+    /**
+     * Установка пользовательского пути к файлу конфигурации и его перезагрузка
+     *
+     * @param string $pathConfig Абсолютный или относительный путь к файлу
+     * @return $this
+     * @throws Exception Если файл по новому пути не найден
+     */
+    public function setPathConfig(string $pathConfig): static
+    {
+        $this->pathConfig = $pathConfig;
+        $this->init(); // Перезагружаем конфигурацию по новому пути
+
         return $this;
     }
 
-    public function getConfig($section = null)
+    /**
+     * Получение всей конфигурации или конкретной секции/ключа
+     *
+     * @param string|null $section Имя секции/ключа конфигурации
+     * @param mixed $default Значение по умолчанию, если секция не найдена
+     * @return mixed
+     */
+    public function getConfig(?string $section = null, mixed $default = null): mixed
     {
-        if (is_null($section))
+        // Если ключ не указан — возвращаем весь массив конфигурации
+        if ($section === null) {
             return $this->config;
-        if (isset($this->config[$section]))
-            return $this->config[$section];
-        return false;
+        }
+
+        // Возвращаем конкретный раздел, если он существует, иначе $default
+        return $this->config[$section] ?? $default;
     }
 }

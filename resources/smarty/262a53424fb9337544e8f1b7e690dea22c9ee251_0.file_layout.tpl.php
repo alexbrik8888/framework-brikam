@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-04 20:31:38
+/* Smarty version 5.8.4, created on 2026-08-05 20:27:21
   from 'file:Admin/layout/layout.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a7221fa1bb410_09557975',
+  'unifunc' => 'content_6a7372799ba769_01214420',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a7221fa1bb410_09557975 (\Smarty\Template $_smarty_tpl) {
+function content_6a7372799ba769_01214420 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -29,16 +29,16 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 <head>
     <meta charset="UTF-8">
     <title><?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_11301127166a7221fa1a4c66_92793534', "title");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_655841236a7372799ad4f1_72183051', "title");
 ?>
 </title>
     <link rel="stylesheet"   href="/css/admin.css">
     <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_15354956266a7221fa1a64f9_49615511', "styles");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1248010806a7372799af2f2_40449152', "styles");
 ?>
 
     <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_8838805926a7221fa1a7bc3_30941315', "scripts_top");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_16679186176a7372799b0dc8_47619301', "scripts_top");
 ?>
 
 </head>
@@ -62,7 +62,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_8838805926a72
     <?php }?>
     <div class="card">
         <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_5409379996a7221fa1b8828_65014559', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_18582888736a7372799b74e9_12576216', "content");
 ?>
 
     </div>
@@ -70,12 +70,12 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_5409379996a72
 
 </body>
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_4834118406a7221fa1b9fb6_17280653', "scripts_bottom");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_18245454176a7372799b8f72_67669385', "scripts_bottom");
 ?>
 
 </html><?php }
 /* {block "title"} */
-class Block_11301127166a7221fa1a4c66_92793534 extends \Smarty\Runtime\Block
+class Block_655841236a7372799ad4f1_72183051 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin\\layout';
@@ -85,7 +85,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "title"} */
 /* {block "styles"} */
-class Block_15354956266a7221fa1a64f9_49615511 extends \Smarty\Runtime\Block
+class Block_1248010806a7372799af2f2_40449152 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin\\layout';
@@ -93,7 +93,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "styles"} */
 /* {block "scripts_top"} */
-class Block_8838805926a7221fa1a7bc3_30941315 extends \Smarty\Runtime\Block
+class Block_16679186176a7372799b0dc8_47619301 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin\\layout';
@@ -101,7 +101,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "scripts_top"} */
 /* {block "content"} */
-class Block_5409379996a7221fa1b8828_65014559 extends \Smarty\Runtime\Block
+class Block_18582888736a7372799b74e9_12576216 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin\\layout';
@@ -109,7 +109,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "content"} */
 /* {block "scripts_bottom"} */
-class Block_4834118406a7221fa1b9fb6_17280653 extends \Smarty\Runtime\Block
+class Block_18245454176a7372799b8f72_67669385 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin\\layout';

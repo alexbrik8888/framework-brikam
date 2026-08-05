@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-04 20:31:51
+/* Smarty version 5.8.4, created on 2026-08-05 20:27:21
   from 'file:C:\OpenServer\domains\testwork\resources\smarty\pages/Admin/article.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a722207885767_66100686',
+  'unifunc' => 'content_6a73727962a159_09612888',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '057e640b8c76dbbccc59648b320dfd24a44f05ff' => 
     array (
       0 => 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages/Admin/article.tpl',
-      1 => 1785843655,
+      1 => 1785945526,
       2 => 'file',
     ),
   ),
@@ -20,32 +20,32 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a722207885767_66100686 (\Smarty\Template $_smarty_tpl) {
+function content_6a73727962a159_09612888 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_11601765056a72220783a6b0_67476878', "title");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_6987880366a7372795e88d5_42899481', "title");
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_13194322016a7222078435c7_49580571', "scripts_top");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_896930386a7372795f1290_69203182', "scripts_top");
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_5359043506a722207844ea6_38603992', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_11917878666a7372795f2405_11300485', "content");
 ?>
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_13299306786a722207884826_41969417', "scripts_bottom");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_21247071016a7372796295e6_49250325', "scripts_bottom");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "Admin/layout/layout.tpl", $_smarty_current_dir);
 }
 /* {block "title"} */
-class Block_11601765056a72220783a6b0_67476878 extends \Smarty\Runtime\Block
+class Block_6987880366a7372795e88d5_42899481 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
@@ -55,7 +55,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "title"} */
 /* {block "scripts_top"} */
-class Block_13194322016a7222078435c7_49580571 extends \Smarty\Runtime\Block
+class Block_896930386a7372795f1290_69203182 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
@@ -80,7 +80,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 }
 /* {/block "scripts_top"} */
 /* {block "content"} */
-class Block_5359043506a722207844ea6_38603992 extends \Smarty\Runtime\Block
+class Block_11917878666a7372795f2405_11300485 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';
@@ -97,7 +97,7 @@ $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pa
 " required placeholder="Введите заголовок статьи">
         </div>
         <?php if ((true && (true && null !== ($_smarty_tpl->getValue('article')['id'] ?? null)))) {?>
-            <input type="hiddent" id="id" name="id" value="<?php echo (($tmp = $_smarty_tpl->getValue('article')['id'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+            <input type="hidden" id="id" name="id" value="<?php echo (($tmp = $_smarty_tpl->getValue('article')['id'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
 ">
         <?php }?>
         <!-- Описание (анонс) -->
@@ -176,7 +176,7 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
 }
 /* {/block "content"} */
 /* {block "scripts_bottom"} */
-class Block_13299306786a722207884826_41969417 extends \Smarty\Runtime\Block
+class Block_21247071016a7372796295e6_49250325 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Admin';

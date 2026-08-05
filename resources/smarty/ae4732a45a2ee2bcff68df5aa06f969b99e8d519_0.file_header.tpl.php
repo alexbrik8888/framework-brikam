@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.4, created on 2026-08-04 19:57:34
+/* Smarty version 5.8.4, created on 2026-08-05 20:25:13
   from 'file:Front/layout/header.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.4',
-  'unifunc' => 'content_6a7219fe4ad187_38687494',
+  'unifunc' => 'content_6a7371f96450e9_75023702',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6a7219fe4ad187_38687494 (\Smarty\Template $_smarty_tpl) {
+function content_6a7371f96450e9_75023702 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\OpenServer\\domains\\testwork\\resources\\smarty\\pages\\Front\\layout';
 ?><header class="main-header">
     <div class="logo">PORTAL<span>NEWS</span></div>

@@ -5,7 +5,7 @@
             'port' => '11211',
             'minLifeTime' => 100
         ],
-
+        'storage_file'=>'storage',
         'root_dir' => dirname(__DIR__,1),
 
         'smarty' =>[
