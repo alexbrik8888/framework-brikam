@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 05 2026 г., 08:36
+-- Время создания: Авг 08 2026 г., 16:33
 -- Версия сервера: 10.6.7-MariaDB-log
 -- Версия PHP: 8.1.5
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `articl`
+-- Структура таблицы `articles`
 --
 
-CREATE TABLE `articl` (
+CREATE TABLE `articles` (
   `id` int(11) NOT NULL,
   `name` varchar(400) NOT NULL,
   `description` text NOT NULL,
@@ -40,10 +40,10 @@ CREATE TABLE `articl` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `articl`
+-- Дамп данных таблицы `articles`
 --
 
-INSERT INTO `articl` (`id`, `name`, `description`, `text`, `is_deleted`, `is_hidden`, `published_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `articles` (`id`, `name`, `description`, `text`, `is_deleted`, `is_hidden`, `published_at`, `created_at`, `updated_at`) VALUES
 (1, 'Эволюция языков программирования: От ассемблера до современных мультипарадигменных языков', 'Обзор того, как развивались концепции языков высокого уровня и какие тренды преобладают сегодня.', 'История языков программирования — это постоянный поиск баланса между производительностью исполнения и скоростью разработки. Начиная с машинных кодов и ассемблера, индустрия стремилась к абстрагированию от железа. Появление процедурных языков, затем объектно-ориентированного программирования (ООП), а в последние годы — активный переход к функциональным концепциям формируют современную экосистему IT.', 0, 0, '2023-10-01 07:00:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (2, 'Компилируемые vs Интерпретируемые языки: Архитектурные различия и компромиссы', 'Подробный анализ механизмов исполнения кода, роли JIT-компиляции и влияния на быстродействие.', 'Выбор между компиляцией в машинный код и интерпретацией в реальном времени определяет многие свойства языка. Компилируемые языки (C++, Rust, Go) гарантируют максимальную скорость работы и выявление ошибок на этапе сборки. Интерпретируемые языки предлагают гибкость и динамическую типизацию, а современная JIT-компиляция в V8 или PyPy размывает грань между этими подходом.', 0, 0, '2023-10-02 08:30:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (3, 'Как выбрать первый язык программирования в 2024 году', 'Сравнение популярных направлений: веб-разработка, мобильная разработка, анализ данных и системное программирование.', 'Для начинающих разработчиков выбор первого языка определяет порог входа в профессию. Python идеален для легкого старта и анализа данных, JavaScript необходим для фронтенда, а Go или Java открывают двери в высоконагруженную бэкенд-разработку. В статье рассматриваются карьерные перспективы для каждого направления.', 0, 0, '2023-10-03 11:00:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
@@ -53,7 +53,7 @@ INSERT INTO `articl` (`id`, `name`, `description`, `text`, `is_deleted`, `is_hid
 (7, 'Оптимизация работы в IDE: Горячие клавиши, плагины и кастомизация', 'Повышаем продуктивность работы в разработческих средах JetBrains и VS Code.', 'Инструментарий разработчика напрямую влияет на скорость написания и отладки кода. В статье собраны лучшие практики по настройке горячих клавиш, мультикурсоров, автодополнения на базе ИИ и интеграции линтеров, позволяющих сократить рутинные действия в разы.', 0, 0, '2023-10-07 07:00:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (8, 'Основы CI/CD: Автоматизация сборки, тестирования и деплоя', 'Пошаговый разбор пайплайнов непрерывной интеграции и доставки ПО.', 'Continuous Integration и Continuous Deployment превратили релизный процесс из рискованного события в повседневную рутину. Рассматривается организация пайплайнов, автоматический прогон модульных и интеграционных тестов, а также стратегический выкатывание (Blue-Green, Canary deployments).', 0, 0, '2023-10-08 12:30:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (9, 'Статический анализ кода и линтинг в корпоративных проектах', 'Внедрение SonarQube, ESLint и PHPStan для контроля качества кода в команде.', 'Автоматизированный поиск багов, уязвимостей и дубликатов кода на этапе сборки позволяет предотвратить попадание дурно пахнущего кода в продакшн. В материале разбираются правила настройки линтеров и интеграция их с системами контроля версий.', 0, 0, '2023-10-09 10:10:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
-(10, 'Реляционные vs NoSQL базы данных: Как сделать правильный выбор', 'Сравнительный анализ ACID-требований, BASE-модели, шардинга и репликации.', 'Правильный выбор хранилища данных зависит от характера нагрузки и требований к согласованности. Реляционные БД (PostgreSQL, MySQL) гарантируют строгость строения и транзакционность, тогда как NoSQL (MongoDB, Redis, Cassandra) предлагают горизонтальное масштабирование и гибкие схемы документов.', 0, 0, '2026-08-03 21:00:00', '2026-08-04 17:17:55', '2026-08-04 17:33:46'),
+(10, 'Реляционные vs NoSQL базы данных: Как сделать правильный выбор', 'Сравнительный анализ ACID-требований, BASE-модели, шардинга и репликации.', 'Правильный выбор хранилища данных зависит от характера нагрузки и требований к согласованности. Реляционные БД (PostgreSQL, MySQL) гарантируют строгость строения и транзакционность, тогда как NoSQL (MongoDB, Redis, Cassandra) предлагают горизонтальное масштабирование и гибкие схемы документов.', 0, 0, '2026-08-04 21:00:00', '2026-08-04 17:17:55', '2026-08-05 17:29:01'),
 (11, 'Оптимизация SQL-запросов и индексация: Практический гид', 'Как анализировать EXPLAIN, избегать Full Table Scan и строить составные индексы.', 'Низкая скорость работы базы данных — частая причина медлительности всей системы. В статье подробно изучаются механизмы работы B-Tree и Hash индексов, правила построения покривающих индексов и предотвращение проблемы N+1 запросов.', 0, 0, '2023-10-11 14:00:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (12, 'Транзакции и уровни изоляции в СУБД', 'Разбор эффектов Грязного чтения, Неповторяемого чтения и Фантомов.', 'Транзакции обеспечивают целостность данных при одновременном доступе нескольких пользователей. Мы рассмотрим 4 классических уровня изоляции (Read Uncommitted, Read Committed, Repeatable Read, Serializable) и их влияние на блокировки и производительность.', 0, 0, '2023-10-12 06:40:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (13, 'История Adobe Flash: Взлет, падение и наследие мультимедийной платформы', 'Как Flash сформировал ранний интерактивный веб и почему он прекратил существование.', 'Adobe Flash долгое время являлся стандартом для онлайн-игр, анимаций и видеоплееров. Однако проблемы с безопасностью, высокое потребление ресурсов и появление стандартов HTML5/CSS3 привели к окончательному закрытию технологии в 2020 году.', 1, 1, '2021-05-10 07:00:00', '2021-05-10 07:00:00', '2022-01-10 06:00:00'),
@@ -85,38 +85,35 @@ INSERT INTO `articl` (`id`, `name`, `description`, `text`, `is_deleted`, `is_hid
 (39, 'Разрешение сложных конфликтов слияния в Git', 'Использование 3-way merge, diff3 и инструмента git rerere.', 'Конфликты слияния — неизбежная часть командной разработки. В материале рассказывается, как включить опцию `rerere` для автоматического запоминания и разрешения повторяющихся конфликтов.', 0, 0, '2023-11-05 12:15:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (40, 'Docker Compose: Локальное окружение разработки в один клик', 'Оркестрация контейнеров приложений, баз данных и кэшей с помощью docker-compose.yml.', 'Docker Compose позволяет развернуть всю инфраструктуру проекта (App, PostgreSQL, Redis, Nginx) одной командой `docker compose up`. Рассматриваются правила монтирования volume, сетей (networks) и переменных окружения.', 0, 0, '2023-11-06 06:50:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
 (41, 'Оптимизация Dockerfile: Кэширование слоев и Multi-Stage builds', 'Сокращаем время сборки образов и уменьшаем их размер с сотен мегабайт до десятков.', 'Каждая инструкция в Dockerfile создает отдельный слой. В руководстве показывается, как правильный порядок инструкций позволяет повторно использовать кэш Docker и как собрать бинарник в одном образе, а запустить в минималистичном Alpine или Scratch.', 0, 0, '2023-11-07 10:00:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55'),
-(42, 'Безопасность Docker-контейнеров в Production', 'Запуск от имени не-root пользователя, ограничение ресурсов и сканирование уязвимостей.', 'Запуск процессов внутри контейнера от root-пользователя создает серьезные риски утечки на хост-систему. Разбираем использование директивы USER, лимитов CPU/RAM и сканеров образцов (Trivy, Grype).', 0, 0, '2023-11-08 13:20:00', '2026-08-04 17:17:55', '2026-08-04 17:17:55');
+(42, 'Безопасность Docker-контейнеров в Production', 'Запуск от имени не-root пользователя, ограничение ресурсов и сканирование уязвимостей.', 'Запуск процессов внутри контейнера от root-пользователя создает серьезные риски утечки на хост-систему. Разбираем использование директивы USER, лимитов CPU/RAM и сканеров образцов (Trivy, Grype).', 0, 0, '2026-08-04 21:00:00', '2026-08-04 17:17:55', '2026-08-05 17:29:59'),
+(43, 'Test', 'Test', 'Test', 0, 0, '2026-08-04 21:00:00', '2026-08-05 17:30:31', '2026-08-05 17:30:31');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `articl_view`
+-- Структура таблицы `article_views`
 --
 
-CREATE TABLE `articl_view` (
-  `articl_id` int(11) NOT NULL,
+CREATE TABLE `article_views` (
+  `article_id` int(11) NOT NULL,
   `view` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `articl_view`
+-- Дамп данных таблицы `article_views`
 --
 
-INSERT INTO `articl_view` (`articl_id`, `view`) VALUES
-(1, 31),
-(2, 4),
-(3, 3),
-(5, 8),
-(6, 1),
-(10, 0);
+INSERT INTO `article_views` (`article_id`, `view`) VALUES
+(17, 2),
+(42, 0);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `category`
+-- Структура таблицы `categories`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(150) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
@@ -127,10 +124,10 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `category`
+-- Дамп данных таблицы `categories`
 --
 
-INSERT INTO `category` (`id`, `name`, `parent_id`, `description`, `is_deleted`, `created_at`, `updated_at`) VALUES
+INSERT INTO `categories` (`id`, `name`, `parent_id`, `description`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 'Языки программирования', 0, 'Раздел с популярными языками разработки и их экосистемами', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
 (2, 'Архитектура и Паттерны', 0, 'Шаблоны проектирования, чистая архитектура и лучшие практики', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
 (3, 'Инструменты разработки', 0, 'IDE, системы контроля версий и инструменты для CI/CD', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
@@ -144,25 +141,26 @@ INSERT INTO `category` (`id`, `name`, `parent_id`, `description`, `is_deleted`, 
 (11, 'Порождающие паттерны', 2, 'Шаблоны проектирования, отвечающие за удобную и безопасную создаваемость объектов (Factory, Singleton, Builder)', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
 (12, 'Микросервисы', 2, 'Архитектурный подход к созданию приложений в виде набора небольших независимых сервисов', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
 (13, 'Git', 3, 'Распределенная система контроля версий исходного кода', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
-(14, 'Docker', 3, 'Платформа для контейнеризации приложений и настройки окружения', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16');
+(14, 'Docker', 3, 'Платформа для контейнеризации приложений и настройки окружения', 0, '2026-08-04 17:12:16', '2026-08-04 17:12:16'),
+(15, 'Test', 14, '', 0, '2026-08-05 16:50:35', '2026-08-05 16:50:35');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `category_articl`
+-- Структура таблицы `category_article`
 --
 
-CREATE TABLE `category_articl` (
+CREATE TABLE `category_article` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `articl_id` int(11) NOT NULL
+  `article_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `category_articl`
+-- Дамп данных таблицы `category_article`
 --
 
-INSERT INTO `category_articl` (`id`, `category_id`, `articl_id`) VALUES
+INSERT INTO `category_article` (`id`, `category_id`, `article_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
@@ -235,21 +233,22 @@ INSERT INTO `category_articl` (`id`, `category_id`, `articl_id`) VALUES
 (71, 3, 40),
 (72, 14, 41),
 (73, 3, 41),
-(74, 14, 42),
-(75, 3, 42),
 (76, 2, 24),
 (77, 3, 34),
 (78, 6, 14),
 (79, 10, 41),
-(80, 4, 10);
+(171, 4, 10),
+(174, 3, 42),
+(175, 14, 42),
+(176, 5, 43);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `file`
+-- Структура таблицы `files`
 --
 
-CREATE TABLE `file` (
+CREATE TABLE `files` (
   `id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `system_name` varchar(255) NOT NULL,
@@ -263,25 +262,21 @@ CREATE TABLE `file` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `file`
+-- Дамп данных таблицы `files`
 --
 
-INSERT INTO `file` (`id`, `file_name`, `system_name`, `extension`, `file_path`, `type_id`, `abstract_id`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_1.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 1, 0, '2026-08-03 18:36:38', '2026-08-03 18:36:38'),
-(2, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_2.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 2, 0, '2026-08-03 18:37:56', '2026-08-03 18:37:55'),
-(3, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_3.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 3, 0, '2026-08-03 18:38:23', '2026-08-03 18:38:23'),
-(4, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_4.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 4, 0, '2026-08-03 18:38:51', '2026-08-03 18:38:51'),
-(5, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_5.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 5, 0, '2026-08-03 18:39:46', '2026-08-03 18:39:46'),
-(6, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_6.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 6, 0, '2026-08-03 18:40:16', '2026-08-03 18:40:16'),
-(7, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_10.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 10, 0, '2026-08-04 17:33:46', '2026-08-04 17:33:46');
+INSERT INTO `files` (`id`, `file_name`, `system_name`, `extension`, `file_path`, `type_id`, `abstract_id`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(8, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_10_6a7372dd72c905.94399907.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 10, 0, '2026-08-05 17:29:01', '2026-08-05 17:29:01'),
+(10, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_42_6a737317dc9c52.77046952.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 42, 0, '2026-08-05 17:29:59', '2026-08-05 17:29:59'),
+(11, 'Gemini_Generated_Image_1jh5991jh5991jh5.png', '1_43_6a7373372f2539.58965357.png', 'png', 'C:\\OpenServer\\domains\\testwork\\storage\\img\\', 1, 43, 0, '2026-08-05 17:30:31', '2026-08-05 17:30:31');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `user_admin`
+-- Структура таблицы `users`
 --
 
-CREATE TABLE `user_admin` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(50) NOT NULL,
@@ -289,10 +284,10 @@ CREATE TABLE `user_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `user_admin`
+-- Дамп данных таблицы `users`
 --
 
-INSERT INTO `user_admin` (`id`, `email`, `password`, `group`) VALUES
+INSERT INTO `users` (`id`, `email`, `password`, `group`) VALUES
 (1, 'test@work.com', '827ccb0eea8a706c4c34a16891f84e7b', 1);
 
 --
@@ -300,78 +295,73 @@ INSERT INTO `user_admin` (`id`, `email`, `password`, `group`) VALUES
 --
 
 --
--- Индексы таблицы `articl`
+-- Индексы таблицы `articles`
 --
-ALTER TABLE `articl`
+ALTER TABLE `articles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `articl_view`
+-- Индексы таблицы `article_views`
 --
-ALTER TABLE `articl_view`
-  ADD PRIMARY KEY (`articl_id`);
+ALTER TABLE `article_views`
+  ADD PRIMARY KEY (`article_id`);
 
 --
--- Индексы таблицы `category`
+-- Индексы таблицы `categories`
 --
-ALTER TABLE `category`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `category_articl`
+-- Индексы таблицы `category_article`
 --
-ALTER TABLE `category_articl`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category` (`category_id`),
-  ADD KEY `articl` (`id`);
+ALTER TABLE `category_article`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `file`
+-- Индексы таблицы `files`
 --
-ALTER TABLE `file`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `abstruct` (`abstract_id`),
-  ADD KEY `type` (`type_id`);
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `user_admin`
+-- Индексы таблицы `users`
 --
-ALTER TABLE `user_admin`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблицы `articl`
+-- AUTO_INCREMENT для таблицы `articles`
 --
-ALTER TABLE `articl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+ALTER TABLE `articles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT для таблицы `category`
+-- AUTO_INCREMENT для таблицы `categories`
 --
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT для таблицы `category_articl`
+-- AUTO_INCREMENT для таблицы `category_article`
 --
-ALTER TABLE `category_articl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+ALTER TABLE `category_article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
--- AUTO_INCREMENT для таблицы `file`
+-- AUTO_INCREMENT для таблицы `files`
 --
-ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT для таблицы `user_admin`
+-- AUTO_INCREMENT для таблицы `users`
 --
-ALTER TABLE `user_admin`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
